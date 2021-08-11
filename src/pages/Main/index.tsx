@@ -1,17 +1,34 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
-import ReactFlow, { Edge, Node, Elements, isNode, removeElements, addEdge, Connection, Controls, MiniMap } from 'react-flow-renderer';
+import ReactFlow, { 
+  Edge, 
+  Node, 
+  Elements, 
+  isNode, 
+  removeElements, 
+  addEdge, 
+  Connection, 
+  Controls, 
+  MiniMap,
+  ReactFlowProvider,
+} from 'react-flow-renderer';
+import SideBar from '../../components/SideBar';
 
 import And from '../../nodes/And';
 
-import { MainContainer, SideBar, FlowContainer } from './styles';
+import { MainContainer, FlowContainer } from './styles';
 
 const nodeTypes = {
   and: And,
 }
 
+let id = 0;
+const getId = () => `dndnode_${id++}`;
+
 const Main: React.FC = () => {
+  const reactFlowWrapper = useRef<HTMLDivElement>({} as HTMLDivElement);
+  const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
   const [elements, setElements] = useState<Elements>([]);
 
   useEffect(() => {
@@ -38,6 +55,10 @@ const Main: React.FC = () => {
       // { id: 'e2-3', source: '2', target: '3' },
     ])
   }, [])
+
+  const handleLoad = useCallback((_reactFlowInstance) => { 
+    return setReactFlowInstance(_reactFlowInstance)
+  },[]);
 
   const handleNodeMouseEnter = useCallback((event: React.MouseEvent<Element, MouseEvent>, clikedElement: Node<any> | Edge<any>) => {  
     const newElements = elements.map(element => {
@@ -129,7 +150,7 @@ const Main: React.FC = () => {
     []
   );
 
-  const onConnect = useCallback(
+  const handleConnect = useCallback(
     (params: Edge<any> | Connection) =>
       setElements((els) =>
         addEdge({ ...params }, els)
@@ -137,39 +158,68 @@ const Main: React.FC = () => {
     []
   );
 
+  const handleDragOver = useCallback((event: any) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  },[]);
+
+  const handleDrop = (event: any) => {
+    event.preventDefault();
+    
+    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+    const type = event.dataTransfer.getData('application/reactflow');
+    const position = reactFlowInstance.project({
+      x: event.clientX - reactFlowBounds.left,
+      y: event.clientY - reactFlowBounds.top,
+    });
+    const newNode = {
+      id: getId(),
+      type,
+      position,
+      data: { label: `${type} node` },
+    };
+
+    setElements((es) => es.concat(newNode));
+  };
+
   return (
     <MainContainer>
-      <SideBar></SideBar>
-      <FlowContainer>
-        <ReactFlow 
-          elements={elements} 
-          nodeTypes={nodeTypes} 
-          onElementClick={handleElementClick}
-          onPaneClick={handlePaneClick}
-          deleteKeyCode="Delete"
-          onElementsRemove={handleElementsRemove}
-          onNodeMouseEnter={handleNodeMouseEnter}
-          onNodeMouseLeave={handleNodeMouseLeave}
-          onConnect={onConnect}
-        >
-          <Controls />
-          <MiniMap
-            nodeColor={(node) => {
-              switch (node.type) {
-                case 'input':
-                  return 'rgb(0,0,255)';
-                case 'default':
-                  return '#00ff00';
-                case 'output':                  
-                  return 'red';
-                default:
-                  return '#eee';
-              }
-            }}
-            nodeStrokeWidth={3}
-          />
-        </ReactFlow>
-      </FlowContainer>
+      <SideBar/>
+      <ReactFlowProvider>
+        <FlowContainer ref={reactFlowWrapper}>
+          <ReactFlow 
+            onLoad={handleLoad}
+            elements={elements} 
+            nodeTypes={nodeTypes} 
+            onElementClick={handleElementClick}
+            onPaneClick={handlePaneClick}
+            deleteKeyCode="Delete"
+            onElementsRemove={handleElementsRemove}
+            onNodeMouseEnter={handleNodeMouseEnter}
+            onNodeMouseLeave={handleNodeMouseLeave}
+            onConnect={handleConnect}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+          >
+            <Controls />
+            <MiniMap
+              nodeColor={(node) => {
+                switch (node.type) {
+                  case 'input':
+                    return 'rgb(0,0,255)';
+                  case 'default':
+                    return '#00ff00';
+                  case 'output':                  
+                    return 'red';
+                  default:
+                    return '#eee';
+                }
+              }}
+              nodeStrokeWidth={3}
+            />
+          </ReactFlow>
+        </FlowContainer>
+      </ReactFlowProvider>
     </MainContainer>
   )
 }
