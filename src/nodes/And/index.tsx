@@ -1,4 +1,5 @@
-import { Handle, Position } from 'react-flow-renderer';
+import { useEffect } from 'react';
+import { Handle, Position, Node } from 'react-flow-renderer';
 
 import { Container } from './styles';
 
@@ -6,10 +7,33 @@ interface AndProps {
   data: {
     isSelected: boolean;
     isHovered: boolean;
+    nodeId: string;
+    outPut?: number;
+    inputs?: {
+      origin: string;
+      value: number
+    }[];
+    setElements: any;
   };
 }
 
 const And: React.FC<AndProps> = ({ data }) => {
+
+  useEffect(() => {
+    data.setElements((state: any) => state.map((element: Node) => {
+      if (element.id === data.nodeId) {
+        return {
+          ...element,
+          data: {
+            ...element.data,
+            outPut: data.inputs?.some(input => input.value === 0) ? 0 : 1,
+          },
+        }
+      }
+      return element;
+    }));
+  }, [data]);
+
   return( 
     <Container isSelected={data.isSelected} isHovered={data.isHovered}>
       <Handle 

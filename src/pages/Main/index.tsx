@@ -16,11 +16,13 @@ import ReactFlow, {
 import SideBar from '../../components/SideBar';
 
 import And from '../../nodes/And';
+import Switch from '../../nodes/Switch';
 
 import { MainContainer, FlowContainer } from './styles';
 
 const nodeTypes = {
   and: And,
+  switch: Switch,
 }
 
 let id = 0;
@@ -42,11 +44,17 @@ const Main: React.FC = () => {
       {
         id: '2',
         type: 'and',
-        data: { isSelected: false },
+        data: { isSelected: false, nodeId: '3', setElements, },
         position: { x: 100, y: 125 },
       },
       {
         id: '3',
+        type: 'switch',
+        data: { isSelected: false, inputValue: 0, nodeId: '3', setElements, },
+        position: { x: 250, y: 125 },
+      },
+      {
+        id: '4',
         type: 'output',
         data: { label: 'Output Node', isSelected: false },
         position: { x: 250, y: 250 },
@@ -150,13 +158,40 @@ const Main: React.FC = () => {
     []
   );
 
-  const handleConnect = useCallback(
-    (params: Edge<any> | Connection) =>
-      setElements((els) =>
-        addEdge({ ...params }, els)
-      ),
-    []
-  );
+  const handleConnect = useCallback((params: Edge<any> | Connection) =>{
+    const sourceNode = elements.find(element => element.id === params.source);
+    const targetNode = elements.find(element => element.id === params.target);
+    
+    if (sourceNode?.type === "switch" && targetNode?.type === "and") {
+      if (!targetNode.data.inputs) {
+        targetNode.data.inputs = [{origin: sourceNode.id, value: sourceNode.data.inputValue}];
+      } else {
+        const sourceInputIndex = targetNode.data.inputs.findIndex(
+          (input: any) => input.orgin === sourceNode.id
+        );
+
+        if (sourceInputIndex !== -1) {
+          targetNode.data.inputs[sourceInputIndex].value = sourceNode.data.inputValue;
+        } else {
+          targetNode.data.inputs = [
+            ...targetNode.data.inputs,
+            {origin: sourceNode.id, value: sourceNode.data.inputValue}
+          ]
+        }
+      }          
+    }
+
+    const newElements = elements.map(element => {
+      if(element.id === params.source) {
+        return sourceNode;
+      }
+      return element
+    });
+
+    setElements(
+      addEdge({ ...params }, newElements as Elements<any>)
+    )
+  },[elements]);
 
   const handleDragOver = useCallback((event: any) => {
     event.preventDefault();

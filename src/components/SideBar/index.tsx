@@ -18,6 +18,9 @@ const SideBar: React.FC = () => {
       <div className="dndnode output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
         Output Node
       </div>
+      <div className="dndnode switch" onDragStart={(event) => onDragStart(event, 'switch')} draggable>
+        Switch Node
+      </div>
     </Container>
   )
 }
