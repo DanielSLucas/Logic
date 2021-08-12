@@ -6,19 +6,26 @@ interface ContainerProps {
 }
 
 export const Container = styled.div<ContainerProps>`
-  background: #FFF;
-  border: 1px solid #000;
-  border-radius: 0 2rem 2rem 0;
-  height: 6rem;
-  width: 4.5rem;
+  height: 5rem;
+  width: 5.96rem;
+  border-radius: 0 2.6rem 2.6rem 0;
+  box-sizing: content-box;
 
-  ${(props) =>
+  svg {
+    width: 6rem;
+    height: 100%;
+    stroke: #323232;
+
+    ${(props) =>
     props.isSelected && css`
-      border-width: 2px;
+      stroke-width: 1.25px;
     `}
+  }
+
+  
 
   ${(props) =>
     props.isHovered && css`
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
+      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
     `}
 `;
