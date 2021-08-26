@@ -24,6 +24,7 @@ import Not from '../../nodes/Not';
 
 import { MainContainer, FlowContainer } from './styles';
 import Xor from '../../nodes/Xor';
+import Xnor from '../../nodes/Xnor';
 
 const nodeTypes = {
   and: And,
@@ -32,6 +33,7 @@ const nodeTypes = {
   nor: Nor,
   not: Not,
   xor: Xor,
+  xnor: Xnor,
   switch: Switch,
 }
 
@@ -98,6 +100,12 @@ const Main: React.FC = () => {
         type: 'xor',
         data: { isSelected: false, nodeId: '9', setElements, },
         position: { x: 225, y: 500 },
+      },
+      {
+        id: '10',
+        type: 'xnor',
+        data: { isSelected: false, nodeId: '10', setElements, },
+        position: { x: 225, y: 400 },
       },
       // { id: 'e1-2', source: '1', target: '2' },
       // { id: 'e2-3', source: '2', target: '3' },
