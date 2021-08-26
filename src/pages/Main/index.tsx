@@ -20,6 +20,7 @@ import Or from '../../nodes/Or';
 import Switch from '../../nodes/Switch';
 import Nand from '../../nodes/Nand';
 import Nor from '../../nodes/Nor';
+import Not from '../../nodes/Not';
 
 import { MainContainer, FlowContainer } from './styles';
 
@@ -28,6 +29,7 @@ const nodeTypes = {
   nand: Nand,
   or: Or,
   nor: Nor,
+  not: Not,
   switch: Switch,
 }
 
@@ -51,7 +53,7 @@ const Main: React.FC = () => {
         id: '2',
         type: 'and',
         data: { isSelected: false, nodeId: '3', setElements, },
-        position: { x: 100, y: 125 },
+        position: { x: 100, y: 100 },
       },
       {
         id: '3',
@@ -82,6 +84,12 @@ const Main: React.FC = () => {
         type: 'nor',
         data: { isSelected: false, nodeId: '7', setElements, },
         position: { x: 100, y: 400 },
+      },
+      {
+        id: '8',
+        type: 'not',
+        data: { isSelected: false, nodeId: '8', setElements, },
+        position: { x: 100, y: 500 },
       },
       // { id: 'e1-2', source: '1', target: '2' },
       // { id: 'e2-3', source: '2', target: '3' },
