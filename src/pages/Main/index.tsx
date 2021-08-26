@@ -18,11 +18,13 @@ import SideBar from '../../components/SideBar';
 import And from '../../nodes/And';
 import Or from '../../nodes/Or';
 import Switch from '../../nodes/Switch';
+import Nand from '../../nodes/Nand';
 
 import { MainContainer, FlowContainer } from './styles';
 
 const nodeTypes = {
   and: And,
+  nand: Nand,
   or: Or,
   switch: Switch,
 }
@@ -66,6 +68,12 @@ const Main: React.FC = () => {
         type: 'or',
         data: { isSelected: false, nodeId: '5', setElements, },
         position: { x: 100, y: 200 },
+      },
+      {
+        id: '6',
+        type: 'nand',
+        data: { isSelected: false, nodeId: '6', setElements, },
+        position: { x: 100, y: 300 },
       },
       // { id: 'e1-2', source: '1', target: '2' },
       // { id: 'e2-3', source: '2', target: '3' },
