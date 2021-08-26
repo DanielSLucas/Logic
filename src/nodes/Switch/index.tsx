@@ -19,20 +19,20 @@ const Switch: React.FC<AndProps> = ({ data }) => {
   const [onButtonSelected, setOnButtonSelected] = useState(false);
   const [offButtonSelected, setOffButtonSelected] = useState(true);
  
-  useEffect(() => {
-    data.setElements((state: any) => state.map((element: Node) => {
-      if (element.id === data.nodeId) {
-        return {
-          ...element,
-          data: {
-            ...element.data,
-            inputValue: onButtonSelected ? 1 : 0,
-          },
-        }
-      }
-      return element;
-    }))
-  }, [onButtonSelected, offButtonSelected, data.nodeId]);
+  // useEffect(() => {
+  //   data.setElements((state: any) => state.map((element: Node) => {
+  //     if (element.id === data.nodeId) {
+  //       return {
+  //         ...element,
+  //         data: {
+  //           ...element.data,
+  //           inputValue: onButtonSelected ? 1 : 0,
+  //         },
+  //       }
+  //     }
+  //     return element;
+  //   }))
+  // }, [onButtonSelected, offButtonSelected, data.nodeId]);
 
   const handleClick = useCallback((button: number) => {
     if ( button === 1) {
