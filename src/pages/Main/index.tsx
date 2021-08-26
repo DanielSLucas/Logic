@@ -23,6 +23,7 @@ import Nor from '../../nodes/Nor';
 import Not from '../../nodes/Not';
 
 import { MainContainer, FlowContainer } from './styles';
+import Xor from '../../nodes/Xor';
 
 const nodeTypes = {
   and: And,
@@ -30,6 +31,7 @@ const nodeTypes = {
   or: Or,
   nor: Nor,
   not: Not,
+  xor: Xor,
   switch: Switch,
 }
 
@@ -90,6 +92,12 @@ const Main: React.FC = () => {
         type: 'not',
         data: { isSelected: false, nodeId: '8', setElements, },
         position: { x: 100, y: 500 },
+      },
+      {
+        id: '9',
+        type: 'xor',
+        data: { isSelected: false, nodeId: '9', setElements, },
+        position: { x: 225, y: 500 },
       },
       // { id: 'e1-2', source: '1', target: '2' },
       // { id: 'e2-3', source: '2', target: '3' },
