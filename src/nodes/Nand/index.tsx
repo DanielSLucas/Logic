@@ -2,7 +2,7 @@ import { Handle, Position } from 'react-flow-renderer';
 
 import { Container } from './styles';
 
-interface OrProps {
+interface NandProps {
   data: {
     isSelected: boolean;
     isHovered: boolean;
@@ -16,7 +16,7 @@ interface OrProps {
   };
 }
 
-const Or: React.FC<OrProps> = ({ data }) => {
+const Nand: React.FC<NandProps> = ({ data }) => {
 
   return( 
     <Container isSelected={data.isSelected}>
@@ -75,4 +75,4 @@ const Or: React.FC<OrProps> = ({ data }) => {
   )
 }
 
-export default Or;
+export default Nand;
