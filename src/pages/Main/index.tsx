@@ -16,12 +16,14 @@ import ReactFlow, {
 import SideBar from '../../components/SideBar';
 
 import And from '../../nodes/And';
+import Or from '../../nodes/Or';
 import Switch from '../../nodes/Switch';
 
 import { MainContainer, FlowContainer } from './styles';
 
 const nodeTypes = {
   and: And,
+  or: Or,
   switch: Switch,
 }
 
@@ -58,6 +60,12 @@ const Main: React.FC = () => {
         type: 'output',
         data: { label: 'Output Node', isSelected: false },
         position: { x: 250, y: 250 },
+      },
+      {
+        id: '5',
+        type: 'or',
+        data: { isSelected: false, nodeId: '5', setElements, },
+        position: { x: 100, y: 200 },
       },
       // { id: 'e1-2', source: '1', target: '2' },
       // { id: 'e2-3', source: '2', target: '3' },
@@ -159,39 +167,41 @@ const Main: React.FC = () => {
   );
 
   const handleConnect = useCallback((params: Edge<any> | Connection) =>{
-    const sourceNode = elements.find(element => element.id === params.source);
-    const targetNode = elements.find(element => element.id === params.target);
+    // const sourceNode = elements.find(element => element.id === params.source);
+    // const targetNode = elements.find(element => element.id === params.target);
     
-    if (sourceNode?.type === "switch" && targetNode?.type === "and") {
-      if (!targetNode.data.inputs) {
-        targetNode.data.inputs = [{origin: sourceNode.id, value: sourceNode.data.inputValue}];
-      } else {
-        const sourceInputIndex = targetNode.data.inputs.findIndex(
-          (input: any) => input.orgin === sourceNode.id
-        );
+    // if (sourceNode?.type === "switch" && targetNode?.type === "and") {
+    //   if (!targetNode.data.inputs) {
+    //     targetNode.data.inputs = [{origin: sourceNode.id, value: sourceNode.data.inputValue}];
+    //   } else {
+    //     const sourceInputIndex = targetNode.data.inputs.findIndex(
+    //       (input: any) => input.orgin === sourceNode.id
+    //     );
 
-        if (sourceInputIndex !== -1) {
-          targetNode.data.inputs[sourceInputIndex].value = sourceNode.data.inputValue;
-        } else {
-          targetNode.data.inputs = [
-            ...targetNode.data.inputs,
-            {origin: sourceNode.id, value: sourceNode.data.inputValue}
-          ]
-        }
-      }          
-    }
+    //     if (sourceInputIndex !== -1) {
+    //       targetNode.data.inputs[sourceInputIndex].value = sourceNode.data.inputValue;
+    //     } else {
+    //       targetNode.data.inputs = [
+    //         ...targetNode.data.inputs,
+    //         {origin: sourceNode.id, value: sourceNode.data.inputValue}
+    //       ]
+    //     }
+    //   }          
+    // }
 
-    const newElements = elements.map(element => {
-      if(element.id === params.source) {
-        return sourceNode;
-      }
-      return element
-    });
+    // const newElements = elements.map(element => {
+    //   if(element.id === params.source) {
+    //     return sourceNode;
+    //   }
+    //   return element
+    // });
 
-    setElements(
-      addEdge({ ...params }, newElements as Elements<any>)
-    )
-  },[elements]);
+    // setElements(
+    //   addEdge({ ...params }, newElements as Elements<any>)
+    // )
+
+    setElements((elements) => addEdge({ ...params }, elements));
+  },[]);
 
   const handleDragOver = useCallback((event: any) => {
     event.preventDefault();
