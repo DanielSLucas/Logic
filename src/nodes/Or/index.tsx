@@ -19,7 +19,7 @@ interface OrProps {
 const Or: React.FC<OrProps> = ({ data }) => {
 
   return( 
-    <Container isSelected={data.isSelected} isHovered={data.isHovered}>
+    <Container isSelected={data.isSelected}>
       <Handle 
         type="target" 
         id="a" 

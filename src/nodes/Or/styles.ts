@@ -2,7 +2,6 @@ import styled, { css } from "styled-components";
 
 interface ContainerProps {
   isSelected: boolean;
-  isHovered: boolean;
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -24,9 +23,4 @@ export const Container = styled.div<ContainerProps>`
       stroke-width: 1.25px;
     `}
   }
-
-  /* ${(props) =>
-    props.isHovered && css`
-      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);      
-    `} */
 `;
