@@ -37,8 +37,8 @@ const Or: React.FC<OrProps> = ({ data }) => {
               <path d="M3 28C7.46357 17.846 7.26963 12.1544 3 2H17C26.9942 2.81757 31.7311 5.58697 38.5 15C32.7092 22.95 28.3222 26.1498 17 28H3Z"/>
               </g>
               <defs>
-              <filter id="filter0_d" x="0.234009" y="0.5" width="40.8832" height="31" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <filter id="filter0_d" x="0.234009" y="0.5" width="40.8832" height="31" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+              <feFlood floodOpacity="0" result="BackgroundImageFix"/>
               <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
               <feOffset dy="1"/>
               <feGaussianBlur stdDeviation="1"/>

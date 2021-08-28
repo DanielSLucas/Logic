@@ -54,8 +54,8 @@ const And: React.FC<AndProps> = ({ data }) => {
               <path d="M2.5 1.5H20.5C27.6797 1.5 33.5 7.3203 33.5 14.5C33.5 21.6797 27.6797 27.5 20.5 27.5H2.5V1.5Z"/>
               </g>
               <defs>
-              <filter id="filter0_d" x="0" y="0" width="36" height="31" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-              <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+              <filter id="filter0_d" x="0" y="0" width="36" height="31" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+              <feFlood floodOpacity="0" result="BackgroundImageFix"/>
               <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
               <feOffset dy="1"/>
               <feGaussianBlur stdDeviation="1"/>
