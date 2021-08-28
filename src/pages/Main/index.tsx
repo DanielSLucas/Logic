@@ -1,6 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+
 import ReactFlow, { 
   Edge, 
   Node, 
@@ -250,7 +249,7 @@ const Main: React.FC = () => {
     event.dataTransfer.dropEffect = 'move';
   },[]);
 
-  const handleDrop = (event: any) => {
+  const handleDrop = useCallback((event: any) => {
     event.preventDefault();
     
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
@@ -267,7 +266,7 @@ const Main: React.FC = () => {
     };
 
     setElements((es) => es.concat(newNode));
-  };
+  },[reactFlowInstance]);
 
   return (
     <MainContainer>      
