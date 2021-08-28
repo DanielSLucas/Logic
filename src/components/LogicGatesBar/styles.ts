@@ -5,7 +5,6 @@ export const Container = styled.aside`
   width: 100%;
   background-color: transparent;
   border-bottom: 1px solid #D3D3D3;
-  border-radius: 0 0 0.5rem 0.5rem;
 
   display: flex;
   flex-direction: row;

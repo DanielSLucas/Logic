@@ -1,39 +1,62 @@
-import { Container, Title, Step, Button } from "./styles";
+import { useCallback } from "react";
+import { useExplanation } from "../../hooks/explanation";
+import { Container, Title, Step, PlayGroundButton } from "./styles";
 
 const SideBar: React.FC = () => {
+  const { addExplanation } = useExplanation();
+
+  const handleStepClick = useCallback((step: string) => {
+    addExplanation({
+      title: `Passo ${step}`,
+      description: "Descrição legal"      
+    })
+  }, [addExplanation]);
+
   return (
     <Container>      
       <Title>Logic</Title>        
       <nav>
         <ul>              
-          <Step>
-            <div>1</div>
-            <a href="#">introducao</a>
+          <Step>            
+            <button type="button" onClick={() => handleStepClick('1')}>
+              <div>1</div>
+              introducao
+            </button>
           </Step>
-          <Step>
-            <div>2</div>
-            <a href="#">passo 1</a>
+          <Step>            
+            <button type="button" onClick={() => handleStepClick('2')}>
+              <div>2</div>
+              passo 1
+            </button>
           </Step>
-          <Step>
-            <div>3</div>
-            <a href="#">passo 2</a>
+          <Step>            
+            <button type="button" onClick={() => handleStepClick('3')}>
+              <div>3</div>
+              passo 2
+            </button>
           </Step>
-          <Step>
-            <div>4</div>
-            <a href="#">passo 3</a>
+          <Step>            
+            <button type="button" onClick={() => handleStepClick('4')}>
+              <div>4</div>
+              passo 3
+            </button>
           </Step>
-          <Step>
-            <div>5</div>
-            <a href="#">passo 4</a>
+          <Step>            
+            <button type="button" onClick={() => handleStepClick('5')}>
+              <div>5</div>
+              passo 4
+            </button>
           </Step>
-          <Step>
-            <div>6</div>
-            <a href="#">passo 5</a>
+          <Step>          
+            <button type="button" onClick={() => handleStepClick('6')}>
+              <div>6</div>
+              passo 5
+            </button>
           </Step>
         </ul>
       </nav>
       <div className="divider-2"></div>
-      <Button type="button">Playground</Button>        
+      <PlayGroundButton type="button">Playground</PlayGroundButton>        
     </Container>
   );
 }

@@ -45,8 +45,6 @@ export const Step = styled.li`
 
   color: black;
   text-align: left;
-
-  padding: 8px 24px;
       
   border-top: 1px solid #d3d3d3;
   border-bottom: 1px solid #d3d3d3;
@@ -73,9 +71,22 @@ export const Step = styled.li`
   &:hover {
     box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
   }
+
+  button {
+    background: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 0.5rem 1.5rem;
+  }
 `;
 
-export const Button = styled.button`
+export const PlayGroundButton = styled.button`
   height: 4rem;
   width: 90%;
 
@@ -97,5 +108,4 @@ export const Button = styled.button`
   &:hover {
     background-color: rgba(0, 0, 0, 0.03);
   }
-
 `;
