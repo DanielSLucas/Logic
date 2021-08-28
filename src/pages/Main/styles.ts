@@ -7,16 +7,15 @@ export const MainContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
-export const SideBar = styled.div`
-  height: 100%;
-  width: 20rem;
-  background-color: #FAFAFC;
-  box-shadow: 3px 0px 5px rgba(0, 0, 0, 0.25);
-`;
-
-export const FlowContainer = styled.div`
+export const FlowContainer = styled.div`  
   width: 100%;
   height: 100%;
+
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;

@@ -13,7 +13,9 @@ import ReactFlow, {
   MiniMap,
   ReactFlowProvider,
 } from 'react-flow-renderer';
+
 import SideBar from '../../components/SideBar';
+import LogicGatesBar from '../../components/LogicGatesBar';
 
 import And from '../../nodes/And';
 import Or from '../../nodes/Or';
@@ -268,10 +270,11 @@ const Main: React.FC = () => {
   };
 
   return (
-    <MainContainer>
-      <SideBar/>
+    <MainContainer>      
+      <SideBar />
       <ReactFlowProvider>
         <FlowContainer ref={reactFlowWrapper}>
+          <LogicGatesBar />
           <ReactFlow 
             onLoad={handleLoad}
             elements={elements} 
