@@ -9,7 +9,9 @@ interface AndProps {
     nodeId: string;
     inputValue: number;
     setElements: any; 
-    output: string
+    inputs: {
+      value: string;
+    }[];
   };
 }
 
@@ -17,7 +19,7 @@ const Display: React.FC<AndProps> = ({ data }) => {
   return( 
     <Container isSelected={data.isSelected} isHovered={data.isHovered}>
       <div>
-        {data.output}
+        {data.inputs.length !== 0 ? data.inputs[0].value : '0'}
       </div>      
       <Handle
         type="target"
