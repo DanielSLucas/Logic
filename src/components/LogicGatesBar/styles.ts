@@ -95,7 +95,18 @@ export const Container = styled.aside`
         width: 1px;
         margin: 0 0.5rem;
       }
+    }
+  }
 
+  div.display {
+    div {
+      padding: 0.25rem 0.5rem;
+      
+      background: #f3f3f3;
+      border: 1px solid #d3d3d3;
+      border-radius: 0.5rem;
+
+      margin-bottom: 0.6rem;
     }
   }
 

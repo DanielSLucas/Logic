@@ -72,6 +72,9 @@ const LogicGatesBar: React.FC = () => {
       </div>
 
       <div className="dndnode display" onDragStart={(event) => onDragStart(event, 'display')} draggable>      
+        <div>
+          1
+        </div>        
         Display
       </div>
 

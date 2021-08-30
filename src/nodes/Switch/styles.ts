@@ -34,7 +34,7 @@ export const OnButton = styled.button<ButtonProps>`
   color: #d3d3d3;
   width: 50%;
   height: 100%;
-  border: 1px solid #d3d3d3;
+  border: 1px solid #B1ACAC;
   border-radius: 0.5rem 0 0 0.5rem;
   transition: 0.5s background-color;
 
@@ -49,7 +49,7 @@ export const OffButton = styled.button<ButtonProps>`
   color: #d3d3d3;
   width: 50%;
   height: 100%;
-  border: 1px solid #d3d3d3;
+  border: 1px solid #B1ACAC;
   border-radius: 0 0.5rem 0.5rem 0;
   transition: 0.5s background-color;
 

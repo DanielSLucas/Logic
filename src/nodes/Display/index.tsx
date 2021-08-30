@@ -16,7 +16,9 @@ interface AndProps {
 const Display: React.FC<AndProps> = ({ data }) => {
   return( 
     <Container isSelected={data.isSelected} isHovered={data.isHovered}>
-      {data.output}
+      <div>
+        {data.output}
+      </div>      
       <Handle
         type="target"
         position={Position.Bottom}
