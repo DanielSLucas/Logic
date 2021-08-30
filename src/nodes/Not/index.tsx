@@ -23,8 +23,7 @@ const Not: React.FC<NotProps> = ({ data }) => {
       <Handle 
         type="target" 
         id="a" 
-        position={Position.Left} 
-        style={{ top: '70%', borderRadius: 0, }} 
+        position={Position.Left}  
         isConnectable
       />
 
@@ -59,15 +58,6 @@ const Not: React.FC<NotProps> = ({ data }) => {
         }
       </svg>
 
-
-
-      <Handle
-        type="target"
-        position={Position.Left}
-        id="b"
-        style={{ top: '30%', borderRadius: 0 }}
-        isConnectable
-      />
       <Handle
         type="source"
         position={Position.Right}
