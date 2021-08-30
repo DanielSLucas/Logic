@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 
 import ReactFlow, { 
   Edge, 
@@ -12,6 +12,8 @@ import ReactFlow, {
   MiniMap,
   ReactFlowProvider,
 } from 'react-flow-renderer';
+
+import updateElements from '../../utils/updateElements';
 
 import SideBar from '../../components/SideBar';
 import LogicGatesBar from '../../components/LogicGatesBar';
@@ -48,64 +50,6 @@ const Main: React.FC = () => {
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
   const [elements, setElements] = useState<Elements>([]);
 
-  useEffect(() => {
-    setElements([
-      {
-        id: '1',
-        type: 'and',
-        data: { isSelected: false, nodeId: '1', setElements, },
-        position: { x: 100, y: 100 },
-      },
-      {
-        id: '2',
-        type: 'switch',
-        data: { isSelected: false, inputValue: 0, nodeId: '2', setElements, },
-        position: { x: 250, y: 125 },
-      },
-      {
-        id: '3',
-        type: 'or',
-        data: { isSelected: false, nodeId: '4', setElements, },
-        position: { x: 100, y: 200 },
-      },
-      {
-        id: '5',
-        type: 'nand',
-        data: { isSelected: false, nodeId: '5', setElements, },
-        position: { x: 100, y: 300 },
-      },
-      {
-        id: '6',
-        type: 'nor',
-        data: { isSelected: false, nodeId: '7', setElements, },
-        position: { x: 100, y: 400 },
-      },
-      {
-        id: '8',
-        type: 'not',
-        data: { isSelected: false, nodeId: '9', setElements, },
-        position: { x: 100, y: 500 },
-      },
-      {
-        id: '10',
-        type: 'xor',
-        data: { isSelected: false, nodeId: '10', setElements, },
-        position: { x: 225, y: 500 },
-      },
-      {
-        id: '11',
-        type: 'xnor',
-        data: { isSelected: false, nodeId: '11', setElements, },
-        position: { x: 225, y: 400 },
-      },
-      {
-        id: '12',
-        type: 'display',
-        data: { isSelected: false, nodeId: '12', setElements, output: '1' },
-        position: { x: 225, y: 300 },
-      },
-    ])
-  }, [])
 
   const handleLoad = useCallback((_reactFlowInstance) => { 
     return setReactFlowInstance(_reactFlowInstance)
@@ -180,7 +124,7 @@ const Main: React.FC = () => {
   },[elements]);
 
   const handlePaneClick = useCallback((event: React.MouseEvent<Element, MouseEvent>) => {
-    const newElements = elements.map(element => {
+    const newElements = updateElements(elements.map(element => {
       if(isNode(element) && element.data.isSelected) {
         return {
           ...element,
@@ -191,52 +135,68 @@ const Main: React.FC = () => {
         }
       }
       return element;
-    });
+    }));
     setElements(newElements);
   },[elements]);
 
   const handleElementsRemove = useCallback(
     (elementsToRemove) =>
-      setElements((els) => removeElements(elementsToRemove, els)),
+      setElements((els) => updateElements(removeElements(elementsToRemove, els))),
     []
   );
 
   const handleConnect = useCallback((params: Edge<any> | Connection) =>{
-    // const sourceNode = elements.find(element => element.id === params.source);
-    // const targetNode = elements.find(element => element.id === params.target);
+    const sourceNode = elements.find(element => element.id === params.source);
+    const targetNode = elements.find(element => element.id === params.target);
     
-    // if (sourceNode?.type === "switch" && targetNode?.type === "and") {
-    //   if (!targetNode.data.inputs) {
-    //     targetNode.data.inputs = [{origin: sourceNode.id, value: sourceNode.data.inputValue}];
-    //   } else {
-    //     const sourceInputIndex = targetNode.data.inputs.findIndex(
-    //       (input: any) => input.orgin === sourceNode.id
-    //     );
+    function setTargetNodeInputs() {
+      if (sourceNode && targetNode) {
+        const newInput = {
+          sourceNode: sourceNode.id,
+          targetHandle: params.targetHandle,
+          value: sourceNode.data.inputValue || sourceNode.data.output
+        };
+        
+        if (targetNode.data.inputs.length === 0 || targetNode.type === 'display') {
+          targetNode.data.inputs = [newInput];
+          return;
+        }
+  
+        const existentInputIndex = targetNode.data.inputs.findIndex(
+          (existentInput: any) =>  {
+            return existentInput.sourceNode === newInput.sourceNode &&  
+            existentInput.targetHandle === newInput.targetHandle
+          }
+        );
+  
+        if (existentInputIndex !== -1) {
+          targetNode.data.inputs[existentInputIndex] = newInput;
+          return;
+        }
+  
+        targetNode.data.inputs = [
+          ...targetNode.data.inputs,
+          newInput,
+        ];
+        return;
+      }
+    };
+    setTargetNodeInputs();
 
-    //     if (sourceInputIndex !== -1) {
-    //       targetNode.data.inputs[sourceInputIndex].value = sourceNode.data.inputValue;
-    //     } else {
-    //       targetNode.data.inputs = [
-    //         ...targetNode.data.inputs,
-    //         {origin: sourceNode.id, value: sourceNode.data.inputValue}
-    //       ]
-    //     }
-    //   }          
-    // }
 
-    // const newElements = elements.map(element => {
-    //   if(element.id === params.source) {
-    //     return sourceNode;
-    //   }
-    //   return element
-    // });
+    const newElements = updateElements(elements.map(element => {
+      if(element.id === params.target) {
+        return targetNode;
+      }
+      return element
+    }));
 
-    // setElements(
-    //   addEdge({ ...params }, newElements as Elements<any>)
-    // )
+    setElements(
+      addEdge({ ...params }, newElements as Elements<any>)
+    )
 
-    setElements((elements) => addEdge({ ...params }, elements));
-  },[]);
+    // setElements((elements) => addEdge({ ...params }, elements));
+  },[elements]);
 
   const handleDragOver = useCallback((event: any) => {
     event.preventDefault();
@@ -252,14 +212,35 @@ const Main: React.FC = () => {
       x: event.clientX - reactFlowBounds.left,
       y: event.clientY - reactFlowBounds.top,
     });
+
+    const nodeId = getId();
+
+    const data = { 
+      isSelected: false,
+      isHovered: false,           
+      nodeId: nodeId, 
+      setElements, 
+    }
+
+    if (type === "switch") {
+      Object.assign(data, {
+        inputValue: '0',
+      });
+    } else {
+      Object.assign(data, {
+        output: '0',
+        inputs: [],
+      });
+    }    
+
     const newNode = {
-      id: getId(),
+      id: nodeId,
       type,
       position,
-      data: { label: `${type} node` },
+      data,
     };
 
-    setElements((es) => es.concat(newNode));
+    setElements((state) => updateElements(state.concat(newNode)));
   },[reactFlowInstance]);
 
   return (

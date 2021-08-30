@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { Handle, Position, Node } from 'react-flow-renderer';
+import updateElements from '../../utils/updateElements';
 
 import { Container, OnButton, OffButton } from './styles';
 
@@ -10,46 +10,41 @@ interface AndProps {
     isSelected: boolean;
     isHovered: boolean;
     nodeId: string;
-    inputValue: number;
+    inputValue: string;
     setElements: any; 
   };
 }
 
 const Switch: React.FC<AndProps> = ({ data }) => {
   const [onButtonSelected, setOnButtonSelected] = useState(false);
-  const [offButtonSelected, setOffButtonSelected] = useState(true);
- 
-  // useEffect(() => {
-  //   data.setElements((state: any) => state.map((element: Node) => {
-  //     if (element.id === data.nodeId) {
-  //       return {
-  //         ...element,
-  //         data: {
-  //           ...element.data,
-  //           inputValue: onButtonSelected ? 1 : 0,
-  //         },
-  //       }
-  //     }
-  //     return element;
-  //   }))
-  // }, [onButtonSelected, offButtonSelected, data.nodeId]);
+  const [offButtonSelected, setOffButtonSelected] = useState(true); 
 
-  const handleClick = useCallback((button: number) => {
-    if ( button === 1) {
-      setOnButtonSelected(true);
-      setOffButtonSelected(false)
-    } else {
-      setOnButtonSelected(false);
-      setOffButtonSelected(true)
-    }
-  }, []);
+  const handleClick = useCallback(() => { 
+    setOnButtonSelected((state) => !state);
+    setOffButtonSelected((state) => !state)    
+
+    data.setElements((state: any) => {
+      return updateElements(state.map((element: Node) => {
+        if (element.id === data.nodeId) {
+          return {
+            ...element,
+            data: {
+              ...element.data,
+              inputValue: element.data.inputValue === '0' ? '1' : '0',
+            },
+          }
+        }
+        return element;
+      }));      
+    });
+  }, [data]);
 
   return( 
     <Container isSelected={data.isSelected} isHovered={data.isHovered}>
-      <OnButton onClick={() => handleClick(1)} isSelected={onButtonSelected} >
+      <OnButton onClick={handleClick} isSelected={onButtonSelected} >
         1
       </OnButton>
-      <OffButton onClick={() => handleClick(0)} isSelected={offButtonSelected} >
+      <OffButton onClick={handleClick} isSelected={offButtonSelected} >
         0
       </OffButton>
 
