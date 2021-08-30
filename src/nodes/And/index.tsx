@@ -9,7 +9,7 @@ interface AndProps {
     isSelected: boolean;
     isHovered: boolean;
     nodeId: string;
-    outPut?: number;
+    output?: number;
     inputs?: {
       origin: string;
       value: number
@@ -19,22 +19,6 @@ interface AndProps {
 }
 
 const And: React.FC<AndProps> = ({ data }) => {
-
-  // useEffect(() => {
-  //   data.setElements((state: any) => state.map((element: Node) => {
-  //     if (element.id === data.nodeId) {
-  //       return {
-  //         ...element,
-  //         data: {
-  //           ...element.data,
-  //           outPut: data.inputs?.some(input => input.value === 0) ? 0 : 1,
-  //         },
-  //       }
-  //     }
-  //     return element;
-  //   }));
-  // }, [data]);
-
   return( 
     <Container isSelected={data.isSelected} isHovered={data.isHovered}>
       <Handle 
