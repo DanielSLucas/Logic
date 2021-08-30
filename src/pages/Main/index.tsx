@@ -22,10 +22,11 @@ import Switch from '../../nodes/Switch';
 import Nand from '../../nodes/Nand';
 import Nor from '../../nodes/Nor';
 import Not from '../../nodes/Not';
-
-import { MainContainer, FlowContainer } from './styles';
 import Xor from '../../nodes/Xor';
 import Xnor from '../../nodes/Xnor';
+import Display from '../../nodes/Display';
+
+import { MainContainer, FlowContainer } from './styles';
 
 const nodeTypes = {
   and: And,
@@ -36,6 +37,7 @@ const nodeTypes = {
   xor: Xor,
   xnor: Xnor,
   switch: Switch,
+  display: Display
 }
 
 let id = 0;
@@ -50,42 +52,30 @@ const Main: React.FC = () => {
     setElements([
       {
         id: '1',
-        type: 'input',
-        data: { label: 'Input Node', isSelected: false },
-        position: { x: 250, y: 25 },
-      },
-      {
-        id: '2',
         type: 'and',
-        data: { isSelected: false, nodeId: '3', setElements, },
+        data: { isSelected: false, nodeId: '1', setElements, },
         position: { x: 100, y: 100 },
       },
       {
-        id: '3',
+        id: '2',
         type: 'switch',
-        data: { isSelected: false, inputValue: 0, nodeId: '3', setElements, },
+        data: { isSelected: false, inputValue: 0, nodeId: '2', setElements, },
         position: { x: 250, y: 125 },
       },
       {
-        id: '4',
-        type: 'output',
-        data: { label: 'Output Node', isSelected: false },
-        position: { x: 250, y: 250 },
-      },
-      {
-        id: '5',
+        id: '3',
         type: 'or',
-        data: { isSelected: false, nodeId: '5', setElements, },
+        data: { isSelected: false, nodeId: '4', setElements, },
         position: { x: 100, y: 200 },
       },
       {
-        id: '6',
+        id: '5',
         type: 'nand',
-        data: { isSelected: false, nodeId: '6', setElements, },
+        data: { isSelected: false, nodeId: '5', setElements, },
         position: { x: 100, y: 300 },
       },
       {
-        id: '7',
+        id: '6',
         type: 'nor',
         data: { isSelected: false, nodeId: '7', setElements, },
         position: { x: 100, y: 400 },
@@ -93,23 +83,27 @@ const Main: React.FC = () => {
       {
         id: '8',
         type: 'not',
-        data: { isSelected: false, nodeId: '8', setElements, },
+        data: { isSelected: false, nodeId: '9', setElements, },
         position: { x: 100, y: 500 },
       },
       {
-        id: '9',
+        id: '10',
         type: 'xor',
-        data: { isSelected: false, nodeId: '9', setElements, },
+        data: { isSelected: false, nodeId: '10', setElements, },
         position: { x: 225, y: 500 },
       },
       {
-        id: '10',
+        id: '11',
         type: 'xnor',
-        data: { isSelected: false, nodeId: '10', setElements, },
+        data: { isSelected: false, nodeId: '11', setElements, },
         position: { x: 225, y: 400 },
       },
-      // { id: 'e1-2', source: '1', target: '2' },
-      // { id: 'e2-3', source: '2', target: '3' },
+      {
+        id: '12',
+        type: 'display',
+        data: { isSelected: false, nodeId: '12', setElements, output: '1' },
+        position: { x: 225, y: 300 },
+      },
     ])
   }, [])
 
