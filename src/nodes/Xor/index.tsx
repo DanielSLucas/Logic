@@ -7,10 +7,10 @@ interface XorProps {
     isSelected: boolean;
     isHovered: boolean;
     nodeId: string;
-    outPut?: number;
+    output?: number;
     inputs?: {
       origin: string;
-      value: number
+      value: string;
     }[];
     setElements: any;
   };
