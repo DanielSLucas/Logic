@@ -3,7 +3,7 @@ import { animated } from 'react-spring';
 
 export const Container = styled(animated.div)`
   width: 29rem;
-  height: 16rem;
+  height: fit-content;
   
   position: relative;
   z-index: 999;
@@ -62,26 +62,4 @@ export const Container = styled(animated.div)`
     text-align: justify;
     font: 1rem Roboto, arial, sans-serif;
   }
-
-  footer {
-    margin-top: auto;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-
-    button {
-      background: none;
-      border: 1px solid #d3d3d3;
-      border-radius: 0.5rem;
-      
-      padding: 0.25rem 0.5rem;
-      color: #0E5487;
-      font-size: 1rem;
-    }
-
-    button:hover {
-      box-shadow: 2px 2px 5px rgba(0,0,0, 0.25);
-    }
-  }
-
 `;

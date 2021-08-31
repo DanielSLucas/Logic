@@ -1,4 +1,4 @@
-import { useContext, useCallback, createContext, useState  } from "react";
+import { useContext, useCallback, createContext, useState, ReactNode } from "react";
 import { v4 as uuid } from 'uuid';
 import ExplanationContainer from "../components/ExplanationContainer";
 
@@ -12,19 +12,19 @@ const ExplanationContext = createContext<ExplanationContexData>({} as Explanatio
 export interface IExplanation {
   id: string;
   title: string;
-  description: string;
+  content: ReactNode;
 }
 
 const ExplanationProvider: React.FC = ({ children }) => {
   const [explanations, setExplanations] = useState<IExplanation[]>([])
 
   const addExplanation = useCallback(
-    ({ title, description }: Omit<IExplanation, 'id'>): IExplanation => {
+    ({ title, content }: Omit<IExplanation, 'id'>): IExplanation => {
       console.log("addExplanation");
       const explanation = {
         id: uuid(),
         title,
-        description,
+        content,
       }
 
       setExplanations((state) => [...state, explanation]);

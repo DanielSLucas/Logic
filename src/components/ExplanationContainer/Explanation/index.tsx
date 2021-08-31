@@ -27,14 +27,7 @@ const Explanation: React.FC<ExplanationProps> = ({ explanation, style }) => {
         </button>
       </header>
       <div />
-      <p>
-        {explanation.description}        
-      </p>
-      <footer>
-        <button>
-          Próximo
-        </button>
-      </footer>
+      {explanation.content}
     </Container>
   );
 };
