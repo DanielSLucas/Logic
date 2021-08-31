@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import ExplanationContainer from "../components/ExplanationContainer";
 
 interface ExplanationContexData {
-  addExplanation(explanationData: Omit<IExplanation, 'id'>): void;
+  addExplanation(explanationData: Omit<IExplanation, 'id'>): IExplanation;
   removeExplanation(id: string): void;
 }
 
@@ -19,7 +19,7 @@ const ExplanationProvider: React.FC = ({ children }) => {
   const [explanations, setExplanations] = useState<IExplanation[]>([])
 
   const addExplanation = useCallback(
-    ({ title, description }: Omit<IExplanation, 'id'>) => {
+    ({ title, description }: Omit<IExplanation, 'id'>): IExplanation => {
       console.log("addExplanation");
       const explanation = {
         id: uuid(),
@@ -28,6 +28,7 @@ const ExplanationProvider: React.FC = ({ children }) => {
       }
 
       setExplanations((state) => [...state, explanation]);
+      return explanation;
     },[]
   );
 

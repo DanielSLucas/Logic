@@ -1,16 +1,25 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useExplanation } from "../../hooks/explanation";
 import { Container, Title, Step, PlayGroundButton } from "./styles";
 
 const SideBar: React.FC = () => {
-  const { addExplanation } = useExplanation();
+  const { addExplanation, removeExplanation } = useExplanation();
+  const [idOfCurrentlyVisibleExplanation, setIdOfCurrentlyVisibleExplanation] = useState('');
 
-  const handleStepClick = useCallback((step: string) => {
-    addExplanation({
-      title: `Passo ${step}`,
-      description: "Descrição legal"      
-    })
-  }, [addExplanation]);
+  const handleStepClick = useCallback((step: string) => {        
+    const isShowingSomeExplanation = !!idOfCurrentlyVisibleExplanation;
+    
+    isShowingSomeExplanation&& removeExplanation(idOfCurrentlyVisibleExplanation);
+    
+    setTimeout(() => {
+      const explanation = addExplanation({
+        title: `Passo ${step}`,
+        description: "Descrição legal"      
+      });
+      setIdOfCurrentlyVisibleExplanation(explanation.id)
+    }, isShowingSomeExplanation ? 700 : 0);      
+
+  }, [addExplanation, removeExplanation, idOfCurrentlyVisibleExplanation]);
 
   return (
     <Container>      
