@@ -11,6 +11,7 @@ import ReactFlow, {
   Controls, 
   MiniMap,
   ReactFlowProvider,
+  FlowElement,
 } from 'react-flow-renderer';
 
 import updateElements from '../../utils/updateElements';
@@ -183,19 +184,17 @@ const Main: React.FC = () => {
     };
     setTargetNodeInputs();
 
-
-    const newElements = updateElements(elements.map(element => {
+    
+    const newElements = elements.map(element => {
       if(element.id === params.target) {
-        return targetNode;
+        return targetNode as FlowElement;
       }
       return element
-    }));
+    });
 
     setElements(
-      addEdge({ ...params }, newElements as Elements<any>)
-    )
-
-    // setElements((elements) => addEdge({ ...params }, elements));
+      addEdge({ ...params }, updateElements(newElements) as Elements<any>)
+    );
   },[elements]);
 
   const handleDragOver = useCallback((event: any) => {
