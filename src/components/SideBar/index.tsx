@@ -1,89 +1,108 @@
-import { ReactNode, useCallback, useState } from "react";
+import { ReactNode, useCallback, useState, useEffect } from "react";
+import { FiMail } from "react-icons/fi";
 import { useExplanation } from "../../hooks/explanation";
-import { Container, Title, Step, PlayGroundButton } from "./styles";
+import StepButton from "../StepButton";
+import { Container, Title } from "./styles";
 
 const SideBar: React.FC = () => {
-  const { addExplanation, removeExplanation } = useExplanation();
+  const { addExplanation, removeExplanation, isShowingAnExplanation } = useExplanation();
   const [idOfCurrentlyVisibleExplanation, setIdOfCurrentlyVisibleExplanation] = useState('');
+  const [currentlySelectedStep, setCurrentlySelectedStep] = useState('');
 
-  const handleStepClick = useCallback((title: string, content: ReactNode) => {        
-    const isShowingSomeExplanation = !!idOfCurrentlyVisibleExplanation;
-    
-    isShowingSomeExplanation&& removeExplanation(idOfCurrentlyVisibleExplanation);
-    
+  const handleStepClick = useCallback((title: string, content: ReactNode, step: string) => {                
+    isShowingAnExplanation && removeExplanation(idOfCurrentlyVisibleExplanation);        
+
     setTimeout(() => {
       const explanation = addExplanation({
         title,
         content,      
       });
       setIdOfCurrentlyVisibleExplanation(explanation.id)
-    }, isShowingSomeExplanation ? 700 : 0);      
+      setCurrentlySelectedStep(step);
+    }, isShowingAnExplanation ? 700 : 0);      
+    
+  }, [addExplanation, removeExplanation, idOfCurrentlyVisibleExplanation, isShowingAnExplanation]);
 
-  }, [addExplanation, removeExplanation, idOfCurrentlyVisibleExplanation]);
+  useEffect(() => {    
+    if(!isShowingAnExplanation) {
+      setCurrentlySelectedStep('');
+    }
+  }, [isShowingAnExplanation]);
 
   return (
     <Container>      
-      <Title>Logic</Title>        
+      <Title>Logic</Title> 
+      <div className="divider"/>
       <nav>
         <ul>              
-          <Step>            
-            <button 
-              type="button" 
-              onClick={() => handleStepClick('Passo 1', <></>)}
+          <li>
+            <StepButton 
+              stepNumber="0"
+              currentlySelectedStep={currentlySelectedStep} 
+              type="button"
+              onClick={() => handleStepClick('Passo 0', <></>, '0')}
             >
-              <div>1</div>
-              introducao
-            </button>
-          </Step>
-          <Step>            
-            <button 
-              type="button" 
-              onClick={() => handleStepClick('Passo 2', <></>)}
+              Passo 0
+            </StepButton>
+          </li>
+          <li>
+            <StepButton 
+              stepNumber="1"
+              currentlySelectedStep={currentlySelectedStep} 
+              type="button"
+              onClick={() => handleStepClick('Passo 1', <></>, '1')}
             >
-              <div>2</div>
-              passo 1
-            </button>
-          </Step>
-          <Step>            
-            <button 
-              type="button" 
-              onClick={() => handleStepClick('Passo 3', <></>)}
+              Passo 1
+            </StepButton>
+          </li>
+          <li>
+            <StepButton 
+              stepNumber="2"
+              currentlySelectedStep={currentlySelectedStep} 
+              type="button"
+              onClick={() => handleStepClick('Passo 2', <></>, '3')}
             >
-              <div>3</div>
-              passo 2
-            </button>
-          </Step>
-          <Step>            
-            <button 
-              type="button" 
-              onClick={() => handleStepClick('Passo 4', <></>)}
+              Passo 2
+            </StepButton>
+          </li>
+          <li>
+            <StepButton 
+              stepNumber="3"
+              currentlySelectedStep={currentlySelectedStep} 
+              type="button"
+              onClick={() => handleStepClick('Passo 3', <></>, '3')}
             >
-              <div>4</div>
-              passo 3
-            </button>
-          </Step>
-          <Step>            
-            <button 
-              type="button" 
-              onClick={() => handleStepClick('Passo 5', <></>)}
+              Passo 3
+            </StepButton>
+          </li>
+          <li>
+            <StepButton 
+              stepNumber="4"
+              currentlySelectedStep={currentlySelectedStep} 
+              type="button"
+              onClick={() => handleStepClick('Passo 4', <></>, '4')}
             >
-              <div>5</div>
-              passo 4
-            </button>
-          </Step>
-          <Step>          
-            <button 
-              type="button" 
-              onClick={() => handleStepClick('Passo 6', <></>)}
+              Passo 4
+            </StepButton>
+          </li>
+          <li>
+            <StepButton 
+              stepNumber="5"
+              currentlySelectedStep={currentlySelectedStep} 
+              type="button"
+              onClick={() => handleStepClick('Passo 5', <></>, '5')}
             >
-              <div>6</div>
-              passo 5
-            </button>
-          </Step>
+              Passo 5
+            </StepButton>
+          </li>
         </ul>
       </nav>
-      <div className="divider-2"></div>
-      <PlayGroundButton type="button">Playground</PlayGroundButton>        
+      <footer>
+        <a href="mailto:daniellucas-pms@hotmail.com">
+          <FiMail />
+          Contact us!
+        </a> 
+      </footer>
     </Container>
   );
 }
