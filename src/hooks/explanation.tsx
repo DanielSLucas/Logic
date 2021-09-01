@@ -5,6 +5,7 @@ import ExplanationContainer from "../components/ExplanationContainer";
 interface ExplanationContexData {
   addExplanation(explanationData: Omit<IExplanation, 'id'>): IExplanation;
   removeExplanation(id: string): void;
+  isShowingAnExplanation: boolean;
 }
 
 const ExplanationContext = createContext<ExplanationContexData>({} as ExplanationContexData);
@@ -17,10 +18,10 @@ export interface IExplanation {
 
 const ExplanationProvider: React.FC = ({ children }) => {
   const [explanations, setExplanations] = useState<IExplanation[]>([])
+  const [isShowingAnExplanation, setIsShowingAnExplanation] = useState(false);
 
   const addExplanation = useCallback(
     ({ title, content }: Omit<IExplanation, 'id'>): IExplanation => {
-      console.log("addExplanation");
       const explanation = {
         id: uuid(),
         title,
@@ -28,17 +29,18 @@ const ExplanationProvider: React.FC = ({ children }) => {
       }
 
       setExplanations((state) => [...state, explanation]);
+      setIsShowingAnExplanation(true);
       return explanation;
     },[]
   );
 
   const removeExplanation = useCallback((id: string) => {
-    console.log("removeExplanation");
     setExplanations((state) => state.filter(explanation => explanation.id !== id));
+    setIsShowingAnExplanation(false);
   }, []);
 
   return (
-    <ExplanationContext.Provider value={{ addExplanation, removeExplanation }}>
+    <ExplanationContext.Provider value={{ isShowingAnExplanation, addExplanation, removeExplanation }}>
       {children}
       <ExplanationContainer explanations={explanations}/>
     </ExplanationContext.Provider>
