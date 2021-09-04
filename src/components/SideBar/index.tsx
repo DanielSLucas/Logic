@@ -60,7 +60,7 @@ const SideBar: React.FC = () => {
               stepNumber="2"
               currentlySelectedStep={currentlySelectedStep} 
               type="button"
-              onClick={() => handleStepClick('Passo 2', <></>, '3')}
+              onClick={() => handleStepClick('Passo 2', <></>, '2')}
             >
               Passo 2
             </StepButton>
