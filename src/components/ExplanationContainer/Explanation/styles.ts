@@ -3,7 +3,12 @@ import { animated } from 'react-spring';
 
 export const Container = styled(animated.div)`
   width: 29rem;
-  height: fit-content;
+  height: 45rem;
+  overflow-y: scroll;
+  
+  ::-webkit-scrollbar {
+    display: none;
+  }
   
   position: relative;
   z-index: 999;
