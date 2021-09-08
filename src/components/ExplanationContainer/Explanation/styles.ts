@@ -3,7 +3,9 @@ import { animated } from 'react-spring';
 
 export const Container = styled(animated.div)`
   width: 29rem;
-  height: fit-content;
+  height: 45rem;
+  overflow-y: scroll;
+  
   
   position: relative;
   z-index: 999;
@@ -51,7 +53,7 @@ export const Container = styled(animated.div)`
     }
   }
 
-  & > div {
+  & div.divider  {
     background: #d3d3d3;
     width: 100%;
     height: 1px;

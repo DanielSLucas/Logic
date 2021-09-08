@@ -26,7 +26,7 @@ const Explanation: React.FC<ExplanationProps> = ({ explanation, style }) => {
           <FiX />
         </button>
       </header>
-      <div />
+      <div className="divider" />
       {explanation.content}
     </Container>
   );
