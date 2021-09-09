@@ -9,4 +9,28 @@ export const Container = styled.div`
   img{
     width: 100%;
   }
+
+  table.border  {
+    border-collapse: collapse;
+    height: 10rem;
+    width: 15rem;
+    text-align: center;
+    table-layout: fixed;
+    
+}
+
+  table.border td {
+    border: 1px solid black;
+    
+    
+}
+
+table.border th {
+    border: 1px solid black;
+    
+}
+
+
+
+
 `;
