@@ -193,7 +193,7 @@ const Main: React.FC = () => {
     });
 
     setElements(
-      addEdge({ ...params }, updateElements(newElements) as Elements<any>)
+      addEdge({ ...params, type: 'smoothstep', style: { strokeWidth: 2, } }, updateElements(newElements) as Elements<any>)
     );
   },[elements]);
 
@@ -264,18 +264,7 @@ const Main: React.FC = () => {
           >
             <Controls />
             <MiniMap
-              nodeColor={(node) => {
-                switch (node.type) {
-                  case 'input':
-                    return 'rgb(0,0,255)';
-                  case 'default':
-                    return '#00ff00';
-                  case 'output':                  
-                    return 'red';
-                  default:
-                    return '#eee';
-                }
-              }}
+              nodeColor="#eee"
               nodeStrokeWidth={3}
             />
           </ReactFlow>
