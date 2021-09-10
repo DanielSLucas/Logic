@@ -1,0 +1,4 @@
+.next
+**/*.js
+node_modules
+build
