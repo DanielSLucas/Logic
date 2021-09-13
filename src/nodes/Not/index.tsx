@@ -19,7 +19,13 @@ interface NotProps {
 const Not: React.FC<NotProps> = ({ data }) => {
   return (
     <Container isSelected={data.isSelected}>
-      <Handle type="target" id="a" position={Position.Left} isConnectable />
+      <Handle
+        type="target"
+        id="a"
+        position={Position.Left}
+        isConnectable
+        style={{ borderRadius: 0 }}
+      />
 
       <svg
         width="39"
