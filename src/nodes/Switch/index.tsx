@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Handle, Position, Node } from 'react-flow-renderer';
 import updateElements from '../../utils/updateElements';
 
@@ -15,12 +15,10 @@ interface AndProps {
 }
 
 const Switch: React.FC<AndProps> = ({ data }) => {
-  const [onButtonSelected, setOnButtonSelected] = useState(false);
-  const [offButtonSelected, setOffButtonSelected] = useState(true);
+  const [isActive, setIsActive] = useState(false);
 
   const handleClick = useCallback(() => {
-    setOnButtonSelected(state => !state);
-    setOffButtonSelected(state => !state);
+    setIsActive(state => !state);
 
     data.setElements((state: any) => {
       return updateElements(
@@ -40,14 +38,20 @@ const Switch: React.FC<AndProps> = ({ data }) => {
     });
   }, [data]);
 
+  useEffect(() => {
+    data.setElements((state: any) => updateElements(state));
+  }, [data, isActive]);
+
   return (
     <Container isSelected={data.isSelected} isHovered={data.isHovered}>
-      <OnButton onClick={handleClick} isSelected={onButtonSelected}>
-        1
-      </OnButton>
-      <OffButton onClick={handleClick} isSelected={offButtonSelected}>
-        0
-      </OffButton>
+      <div>
+        <OnButton onClick={handleClick} isSelected={isActive}>
+          1
+        </OnButton>
+        <OffButton onClick={handleClick} isSelected={!isActive}>
+          0
+        </OffButton>
+      </div>
 
       <Handle
         type="source"
