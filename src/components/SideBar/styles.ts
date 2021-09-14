@@ -61,8 +61,13 @@ export const Container = styled.aside`
 `;
 
 export const Title = styled.h1`
-  font: 500 3rem Roboto Slab, serif;
-  color: ${props => props.theme.colors.primary};
-  text-align: center;
   margin-top: 1rem;
+
+  button {
+    border: none;
+    background: none;
+    font: 500 3rem Roboto Slab, serif;
+    color: ${props => props.theme.colors.primary};
+    text-align: center;
+  }
 `;

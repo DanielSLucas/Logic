@@ -16,7 +16,6 @@ export const Container = styled.div`
 
   section {
     margin-top: 3rem;
-    margin-bottom: 3rem;
 
     display: flex;
     flex-direction: column;
@@ -42,8 +41,8 @@ export const Container = styled.div`
       font: 400 1.125rem Roboto, arial, sans-serif;
       margin: 0.5rem 0;
 
-      span {
-        margin: 3rem 0;
+      &:last-child {
+        margin-bottom: 5rem;
       }
     }
 
