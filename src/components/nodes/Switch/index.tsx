@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Handle, Position, Node } from 'react-flow-renderer';
-import updateElements from '../../utils/updateElements';
+import updateElements from '../../../utils/updateElements';
 
 import { Container, OnButton, OffButton } from './styles';
 

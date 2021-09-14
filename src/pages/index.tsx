@@ -18,15 +18,15 @@ import updateElements from '../utils/updateElements';
 
 import LogicGatesBar from '../components/LogicGatesBar';
 
-import And from '../nodes/And';
-import Or from '../nodes/Or';
-import Switch from '../nodes/Switch';
-import Nand from '../nodes/Nand';
-import Nor from '../nodes/Nor';
-import Not from '../nodes/Not';
-import Xor from '../nodes/Xor';
-import Xnor from '../nodes/Xnor';
-import Display from '../nodes/Display';
+import And from '../components/nodes/And';
+import Or from '../components/nodes/Or';
+import Switch from '../components/nodes/Switch';
+import Nand from '../components/nodes/Nand';
+import Nor from '../components/nodes/Nor';
+import Not from '../components/nodes/Not';
+import Xor from '../components/nodes/Xor';
+import Xnor from '../components/nodes/Xnor';
+import Display from '../components/nodes/Display';
 
 import { Container } from '../styles/Main';
 
