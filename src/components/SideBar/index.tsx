@@ -1,49 +1,28 @@
-import { ReactNode, useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import { FiMail } from 'react-icons/fi';
-// import { useExplanation } from '../../hooks/explanation';
+import { useRouter } from 'next/router';
 import StepButton from '../StepButton';
 import { Container, Title } from './styles';
 
 const SideBar: React.FC = () => {
-  // const { addExplanation, removeExplanation, isShowingAnExplanation } =
-  //   useExplanation();
-  // const [idOfCurrentlyVisibleExplanation, setIdOfCurrentlyVisibleExplanation] =
-  //   useState('');
+  const router = useRouter();
   const [currentlySelectedStep, setCurrentlySelectedStep] = useState('');
 
   const handleStepClick = useCallback(
-    (title: string, content: ReactNode, step: string) => {
-      // isShowingAnExplanation &&
-      //   removeExplanation(idOfCurrentlyVisibleExplanation);
-      // setTimeout(
-      //   () => {
-      //     const explanation = addExplanation({
-      //       title,
-      //       content,
-      //     });
-      //     setIdOfCurrentlyVisibleExplanation(explanation.id);
-      //     setCurrentlySelectedStep(step);
-      //   },
-      //   isShowingAnExplanation ? 700 : 0,
-      // );
+    (route: string, step: string) => {
+      setCurrentlySelectedStep(step);
+      router.push(route);
     },
-    [
-      // addExplanation,
-      // removeExplanation,
-      // idOfCurrentlyVisibleExplanation,
-      // isShowingAnExplanation,
-    ],
+    [router],
   );
-
-  // useEffect(() => {
-  //   if (!isShowingAnExplanation) {
-  //     setCurrentlySelectedStep('');
-  //   }
-  // }, [isShowingAnExplanation]);
 
   return (
     <Container>
-      <Title>Logic</Title>
+      <Title>
+        <button type="button" onClick={() => handleStepClick('/', '')}>
+          Logic
+        </button>
+      </Title>
       <div className="divider" />
       <nav>
         <ul>
@@ -52,7 +31,7 @@ const SideBar: React.FC = () => {
               stepNumber="0"
               currentlySelectedStep={currentlySelectedStep}
               type="button"
-              onClick={() => handleStepClick('Passo 0', <></>, '0')}
+              onClick={() => handleStepClick('/learn/and', '0')}
             >
               Passo 0
             </StepButton>
@@ -62,7 +41,7 @@ const SideBar: React.FC = () => {
               stepNumber="1"
               currentlySelectedStep={currentlySelectedStep}
               type="button"
-              onClick={() => handleStepClick('Passo 1', <></>, '1')}
+              onClick={() => handleStepClick('/learn/Passo 1', '1')}
             >
               Passo 1
             </StepButton>
@@ -72,7 +51,7 @@ const SideBar: React.FC = () => {
               stepNumber="2"
               currentlySelectedStep={currentlySelectedStep}
               type="button"
-              onClick={() => handleStepClick('Passo 2', <></>, '2')}
+              onClick={() => handleStepClick('/learn/Passo 2', '2')}
             >
               Passo 2
             </StepButton>
@@ -82,7 +61,7 @@ const SideBar: React.FC = () => {
               stepNumber="3"
               currentlySelectedStep={currentlySelectedStep}
               type="button"
-              onClick={() => handleStepClick('Passo 3', <></>, '3')}
+              onClick={() => handleStepClick('/learn/Passo 3', '3')}
             >
               Passo 3
             </StepButton>
@@ -92,7 +71,7 @@ const SideBar: React.FC = () => {
               stepNumber="4"
               currentlySelectedStep={currentlySelectedStep}
               type="button"
-              onClick={() => handleStepClick('Passo 4', <></>, '4')}
+              onClick={() => handleStepClick('/learn/Passo 4', '4')}
             >
               Passo 4
             </StepButton>
@@ -102,7 +81,7 @@ const SideBar: React.FC = () => {
               stepNumber="5"
               currentlySelectedStep={currentlySelectedStep}
               type="button"
-              onClick={() => handleStepClick('Passo 5', <></>, '5')}
+              onClick={() => handleStepClick('/learn/Passo 5', '5')}
             >
               Passo 5
             </StepButton>
