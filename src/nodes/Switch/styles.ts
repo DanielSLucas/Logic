@@ -13,17 +13,11 @@ export const Container = styled.div<ContainerProps>`
   height: 2rem;
   width: 6rem;
   background: #fff;
-  border: 1px solid #000;
   border-radius: 0.5rem;
 
   display: flex;
   align-items: center;
   justify-content: center;
-
-  & div:first-child {
-    width: 90%;
-    height: 90%;
-  }
 
   ${props =>
     props.isSelected &&
@@ -40,7 +34,7 @@ export const Container = styled.div<ContainerProps>`
 
 export const OnButton = styled.button<ButtonProps>`
   color: #d3d3d3;
-  width: 50%;
+  width: 100%;
   height: 100%;
   border: 1px solid #b1acac;
   border-radius: 0.5rem 0 0 0.5rem;
@@ -57,7 +51,7 @@ export const OnButton = styled.button<ButtonProps>`
 
 export const OffButton = styled.button<ButtonProps>`
   color: #d3d3d3;
-  width: 50%;
+  width: 100%;
   height: 100%;
   border: 1px solid #b1acac;
   border-radius: 0 0.5rem 0.5rem 0;

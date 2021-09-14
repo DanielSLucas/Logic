@@ -44,14 +44,12 @@ const Switch: React.FC<AndProps> = ({ data }) => {
 
   return (
     <Container isSelected={data.isSelected} isHovered={data.isHovered}>
-      <div>
-        <OnButton onClick={handleClick} isSelected={isActive}>
-          1
-        </OnButton>
-        <OffButton onClick={handleClick} isSelected={!isActive}>
-          0
-        </OffButton>
-      </div>
+      <OnButton onClick={handleClick} isSelected={isActive}>
+        1
+      </OnButton>
+      <OffButton onClick={handleClick} isSelected={!isActive}>
+        0
+      </OffButton>
 
       <Handle
         type="source"
