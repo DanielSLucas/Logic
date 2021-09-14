@@ -2,6 +2,7 @@ import { ReactNode, useCallback, useState, useEffect } from "react";
 import { FiMail } from "react-icons/fi";
 import { useExplanation } from "../../hooks/explanation";
 import AndExplanation from "../AndExplanation";
+import NandExplanation from "../NandExplanation";
 import StepButton from "../StepButton";
 import { Container, Title } from "./styles";
 
@@ -51,7 +52,7 @@ const SideBar: React.FC = () => {
               stepNumber="1"
               currentlySelectedStep={currentlySelectedStep} 
               type="button"
-              onClick={() => handleStepClick('Passo 1', <></>, '1')}
+              onClick={() => handleStepClick('Passo 1', <NandExplanation/>, '1')}
             >
               Passo 1
             </StepButton>
