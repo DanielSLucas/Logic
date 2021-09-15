@@ -39,7 +39,7 @@ const Switch: React.FC<AndProps> = ({ data }) => {
   }, [data]);
 
   useEffect(() => {
-    data.setElements((state: any) => updateElements(state));
+    data?.setElements?.((state: any) => updateElements(state));
   }, [data, isActive]);
 
   return (

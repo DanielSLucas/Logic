@@ -1,4 +1,6 @@
-import React, { useRef, useState, useCallback } from 'react';
+/* eslint-disable @typescript-eslint/no-empty-function */
+import React, { useRef, useState, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 import ReactFlow, {
   Edge,
@@ -14,6 +16,8 @@ import ReactFlow, {
   FlowElement,
 } from 'react-flow-renderer';
 
+import { FiSave } from 'react-icons/fi';
+import { GetServerSideProps } from 'next';
 import updateElements from '../utils/updateElements';
 
 import LogicGatesBar from '../components/LogicGatesBar';
@@ -29,6 +33,8 @@ import Xnor from '../components/nodes/Xnor';
 import Display from '../components/nodes/Display';
 
 import { Container } from '../styles/Main';
+import SaveButton from '../components/SaveButton';
+import RefreshButton from '../components/RefreshButton';
 
 const nodeTypes = {
   and: And,
@@ -46,10 +52,32 @@ let id = 0;
 // eslint-disable-next-line no-plusplus
 const getId = () => `dndnode_${id++}`;
 
-const Main: React.FC = () => {
+interface MainProps {
+  initalElements: Elements;
+}
+
+const Main: React.FC<MainProps> = ({ initalElements }) => {
+  const router = useRouter();
   const reactFlowWrapper = useRef<HTMLDivElement>({} as HTMLDivElement);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
   const [elements, setElements] = useState<Elements>([]);
+
+  useEffect(() => {
+    setElements(
+      initalElements.map(element => {
+        if (element.data) {
+          return {
+            ...element,
+            data: {
+              ...element.data,
+              setElements,
+            },
+          };
+        }
+        return element;
+      }),
+    );
+  }, [initalElements]);
 
   const handleLoad = useCallback(_reactFlowInstance => {
     return setReactFlowInstance(_reactFlowInstance);
@@ -279,7 +307,14 @@ const Main: React.FC = () => {
   return (
     <ReactFlowProvider>
       <Container ref={reactFlowWrapper}>
-        <LogicGatesBar />
+        <div style={{ width: '100%' }}>
+          <LogicGatesBar />
+          <div>
+            <SaveButton />
+            <RefreshButton setElements={setElements} />
+          </div>
+        </div>
+
         <ReactFlow
           onLoad={handleLoad}
           elements={elements}
@@ -303,3 +338,27 @@ const Main: React.FC = () => {
 };
 
 export default Main;
+
+export const getServerSideProps: GetServerSideProps<MainProps> =
+  async context => {
+    let initalElements = [];
+
+    if (context.query.id) {
+      const response = await fetch(
+        `http://localhost:3000/api/circuit?id=${context.query.id}`,
+        {
+          method: 'GET',
+        },
+      );
+
+      const data = await response.json();
+
+      initalElements = data.circuit.elements as Elements;
+    }
+
+    return {
+      props: {
+        initalElements,
+      },
+    };
+  };
