@@ -14,7 +14,6 @@ export default async function circuit(
       const circuitId = request.query.id;
 
       const foundCircuit = await Circuit.findById(circuitId);
-      console.log('==AQUI===', circuitId, foundCircuit);
 
       return response.status(200).json({ circuit: foundCircuit });
     } catch (error) {
