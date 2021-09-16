@@ -1,19 +1,17 @@
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
-import { useStoreState } from 'react-flow-renderer';
 import { FiSave } from 'react-icons/fi';
 
 // import { Container } from './styles';
+interface SaveButtonProps {
+  rfInstance: any;
+}
 
-const SaveButton: React.FC = () => {
+const SaveButton: React.FC<SaveButtonProps> = ({ rfInstance }) => {
   const router = useRouter();
-  const storedElements = useStoreState(store => [
-    ...store.nodes,
-    ...store.edges,
-  ]);
 
   const handleSave = useCallback(async () => {
-    const circuitId = `/${router.query.id}` || '';
+    const circuitId = router.query.id ? `?id=${router.query.id}` : '';
 
     const response = await fetch(
       `http://localhost:3000/api/circuit${circuitId}`,
@@ -22,14 +20,14 @@ const SaveButton: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(storedElements),
+        body: JSON.stringify(rfInstance.toObject()),
       },
     );
 
     response
       .json()
       .then(data => router.replace(`http://localhost:3000/?id=${data.id}`));
-  }, [storedElements, router]);
+  }, [rfInstance, router]);
 
   return (
     <button type="button" onClick={handleSave}>

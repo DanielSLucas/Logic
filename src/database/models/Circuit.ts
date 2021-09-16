@@ -1,8 +1,8 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import { Elements } from 'react-flow-renderer';
+import { FlowExportObject } from 'react-flow-renderer';
 
 type ICircuit = Document & {
-  elements: Elements;
+  reactFlowInstance: FlowExportObject;
 };
 
 mongoose.connect(
@@ -10,10 +10,8 @@ mongoose.connect(
 );
 
 const circuitsSchema = new Schema({
-  elements: Array,
+  reactFlowInstance: Object,
 });
-
-// const Circuit = mongoose.model<ICircuit>('circuits', circuitsSchema);
 
 export default mongoose.models.circuits ||
   mongoose.model<ICircuit>('circuits', circuitsSchema);

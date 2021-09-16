@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -12,11 +14,11 @@ import ReactFlow, {
   Connection,
   Controls,
   MiniMap,
-  ReactFlowProvider,
   FlowElement,
+  FlowExportObject,
+  useZoomPanHelper,
 } from 'react-flow-renderer';
 
-import { FiSave } from 'react-icons/fi';
 import { GetServerSideProps } from 'next';
 import updateElements from '../utils/updateElements';
 
@@ -35,6 +37,7 @@ import Display from '../components/nodes/Display';
 import { Container } from '../styles/Main';
 import SaveButton from '../components/SaveButton';
 import RefreshButton from '../components/RefreshButton';
+import { useElements } from '../hooks/elements';
 
 const nodeTypes = {
   and: And,
@@ -49,35 +52,30 @@ const nodeTypes = {
 };
 
 let id = 0;
-// eslint-disable-next-line no-plusplus
 const getId = () => `dndnode_${id++}`;
 
 interface MainProps {
-  initalElements: Elements;
+  initalFlowInstance: FlowExportObject;
 }
 
-const Main: React.FC<MainProps> = ({ initalElements }) => {
+const Main: React.FC<MainProps> = ({ initalFlowInstance }) => {
   const router = useRouter();
+  const { elements, setElements } = useElements();
   const reactFlowWrapper = useRef<HTMLDivElement>({} as HTMLDivElement);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
-  const [elements, setElements] = useState<Elements>([]);
+  const { transform } = useZoomPanHelper();
 
   useEffect(() => {
-    setElements(
-      initalElements.map(element => {
-        if (element.data) {
-          return {
-            ...element,
-            data: {
-              ...element.data,
-              setElements,
-            },
-          };
-        }
-        return element;
-      }),
-    );
-  }, [initalElements]);
+    if (router.query.id) {
+      initalFlowInstance.elements.forEach(element => {
+        if (isNode(element)) id++;
+      });
+
+      const [x = 0, y = 0] = initalFlowInstance.position;
+      setElements(updateElements(initalFlowInstance.elements) || []);
+      transform({ x, y, zoom: initalFlowInstance.zoom || 0 });
+    }
+  }, [initalFlowInstance, router, transform, setElements]);
 
   const handleLoad = useCallback(_reactFlowInstance => {
     return setReactFlowInstance(_reactFlowInstance);
@@ -103,7 +101,7 @@ const Main: React.FC<MainProps> = ({ initalElements }) => {
 
       setElements(newElements);
     },
-    [elements],
+    [elements, setElements],
   );
 
   const handleNodeMouseLeave = useCallback(
@@ -126,7 +124,7 @@ const Main: React.FC<MainProps> = ({ initalElements }) => {
 
       setElements(newElements);
     },
-    [elements],
+    [elements, setElements],
   );
 
   const handleElementClick = useCallback(
@@ -168,7 +166,7 @@ const Main: React.FC<MainProps> = ({ initalElements }) => {
 
       setElements(newElements);
     },
-    [elements],
+    [elements, setElements],
   );
 
   const handlePaneClick = useCallback(
@@ -189,13 +187,13 @@ const Main: React.FC<MainProps> = ({ initalElements }) => {
       );
       setElements(newElements);
     },
-    [elements],
+    [elements, setElements],
   );
 
   const handleElementsRemove = useCallback(
     elementsToRemove =>
       setElements(els => updateElements(removeElements(elementsToRemove, els))),
-    [],
+    [setElements],
   );
 
   const handleConnect = useCallback(
@@ -252,12 +250,11 @@ const Main: React.FC<MainProps> = ({ initalElements }) => {
         ),
       );
     },
-    [elements],
+    [elements, setElements],
   );
 
   const handleDragOver = useCallback((event: any) => {
     event.preventDefault();
-    // eslint-disable-next-line no-param-reassign
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
@@ -278,7 +275,6 @@ const Main: React.FC<MainProps> = ({ initalElements }) => {
         isSelected: false,
         isHovered: false,
         nodeId,
-        setElements,
       };
 
       if (type === 'switch') {
@@ -301,39 +297,37 @@ const Main: React.FC<MainProps> = ({ initalElements }) => {
 
       setElements(state => updateElements(state.concat(newNode)));
     },
-    [reactFlowInstance],
+    [reactFlowInstance, setElements],
   );
 
   return (
-    <ReactFlowProvider>
-      <Container ref={reactFlowWrapper}>
-        <div style={{ width: '100%' }}>
-          <LogicGatesBar />
-          <div>
-            <SaveButton />
-            <RefreshButton setElements={setElements} />
-          </div>
+    <Container ref={reactFlowWrapper}>
+      <div style={{ width: '100%' }}>
+        <LogicGatesBar />
+        <div>
+          <SaveButton rfInstance={reactFlowInstance} />
+          <RefreshButton />
         </div>
+      </div>
 
-        <ReactFlow
-          onLoad={handleLoad}
-          elements={elements}
-          nodeTypes={nodeTypes}
-          onElementClick={handleElementClick}
-          onPaneClick={handlePaneClick}
-          deleteKeyCode="Delete"
-          onElementsRemove={handleElementsRemove}
-          onNodeMouseEnter={handleNodeMouseEnter}
-          onNodeMouseLeave={handleNodeMouseLeave}
-          onConnect={handleConnect}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-        >
-          <Controls />
-          <MiniMap nodeColor="#eee" nodeStrokeWidth={3} />
-        </ReactFlow>
-      </Container>
-    </ReactFlowProvider>
+      <ReactFlow
+        onLoad={handleLoad}
+        elements={elements}
+        nodeTypes={nodeTypes}
+        onElementClick={handleElementClick}
+        onPaneClick={handlePaneClick}
+        deleteKeyCode="Delete"
+        onElementsRemove={handleElementsRemove}
+        onNodeMouseEnter={handleNodeMouseEnter}
+        onNodeMouseLeave={handleNodeMouseLeave}
+        onConnect={handleConnect}
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+      >
+        <Controls />
+        <MiniMap nodeColor="#eee" nodeStrokeWidth={3} />
+      </ReactFlow>
+    </Container>
   );
 };
 
@@ -341,7 +335,7 @@ export default Main;
 
 export const getServerSideProps: GetServerSideProps<MainProps> =
   async context => {
-    let initalElements = [];
+    let initalFlowInstance = null;
 
     if (context.query.id) {
       const response = await fetch(
@@ -353,12 +347,12 @@ export const getServerSideProps: GetServerSideProps<MainProps> =
 
       const data = await response.json();
 
-      initalElements = data.circuit.elements as Elements;
+      initalFlowInstance = data.reactFlowInstance as FlowExportObject;
     }
 
     return {
       props: {
-        initalElements,
+        initalFlowInstance,
       },
     };
   };

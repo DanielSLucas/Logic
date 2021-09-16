@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Handle, Position, Node } from 'react-flow-renderer';
+import { useElements } from '../../../hooks/elements';
 import updateElements from '../../../utils/updateElements';
 
 import { Container, OnButton, OffButton } from './styles';
@@ -10,17 +11,17 @@ interface AndProps {
     isHovered: boolean;
     nodeId: string;
     inputValue: string;
-    setElements: any;
   };
 }
 
 const Switch: React.FC<AndProps> = ({ data }) => {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(data.inputValue !== '0');
+  const { setElements } = useElements();
 
   const handleClick = useCallback(() => {
     setIsActive(state => !state);
 
-    data.setElements((state: any) => {
+    setElements((state: any) => {
       return updateElements(
         state.map((element: Node) => {
           if (element.id === data.nodeId) {
@@ -36,11 +37,11 @@ const Switch: React.FC<AndProps> = ({ data }) => {
         }),
       );
     });
-  }, [data]);
+  }, [data, setElements]);
 
   useEffect(() => {
-    data?.setElements?.((state: any) => updateElements(state));
-  }, [data, isActive]);
+    setElements((state: any) => updateElements(state));
+  }, [setElements, isActive]);
 
   return (
     <Container isSelected={data.isSelected} isHovered={data.isHovered}>

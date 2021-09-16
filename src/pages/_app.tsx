@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import GlobalStyle from '../styles/GlobalStyle';
 import defaultTheme from '../styles/themes/default';
+import AppProvider from '../hooks';
 
 import { Container } from '../styles/App';
 import SideBar from '../components/SideBar';
@@ -14,7 +15,9 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => (
     <Container>
       <main>
         <SideBar />
-        <Component {...pageProps} />
+        <AppProvider>
+          <Component {...pageProps} />
+        </AppProvider>
       </main>
     </Container>
   </ThemeProvider>

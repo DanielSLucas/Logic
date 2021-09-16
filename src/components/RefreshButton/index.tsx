@@ -1,16 +1,13 @@
 import React, { useCallback } from 'react';
 import { FiRefreshCw } from 'react-icons/fi';
+import { useElements } from '../../hooks/elements';
 import updateElements from '../../utils/updateElements';
 
 // import { Container } from './styles';
-interface RefreshButtonProps {
-  setElements: any;
-}
 
-const RefreshButton: React.FC<RefreshButtonProps> = ({
-  children,
-  setElements,
-}) => {
+const RefreshButton: React.FC = () => {
+  const { setElements } = useElements();
+
   const handleRefresh = useCallback(async () => {
     setElements(state => updateElements(state));
   }, [setElements]);

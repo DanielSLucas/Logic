@@ -15,7 +15,7 @@ export default async function circuit(
 
       const foundCircuit = await Circuit.findById(circuitId);
 
-      return response.status(200).json({ circuit: foundCircuit });
+      return response.status(200).json(foundCircuit);
     } catch (error) {
       response.status(400).json({ success: false });
     }
@@ -23,10 +23,10 @@ export default async function circuit(
 
   if (method === 'POST') {
     try {
-      const elements = request.body;
+      const reactFlowInstance = request.body;
 
       const newCircuit = await Circuit.create({
-        elements,
+        reactFlowInstance,
       });
 
       return response.status(200).json({ id: newCircuit.id });
@@ -38,10 +38,10 @@ export default async function circuit(
   if (method === 'PUT') {
     try {
       const circuitId = request.query.id;
-      const elements = request.body;
+      const reactFlowInstance = request.body;
 
       const updatedCircuit = await Circuit.findByIdAndUpdate(circuitId, {
-        elements,
+        reactFlowInstance,
       });
 
       return response.status(200).json({ id: updatedCircuit.id });
