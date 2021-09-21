@@ -61,7 +61,7 @@ export const Container = styled.aside`
 `;
 
 export const Title = styled.h1`
-  margin-top: 2rem;
+  margin-top: 1.9rem;
   font: 500 3rem Roboto Slab, serif;
   color: ${props => props.theme.colors.primary};
 `;

@@ -2,7 +2,8 @@ import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
 import { FiSave } from 'react-icons/fi';
 
-// import { Container } from './styles';
+import { Container } from './styles';
+
 interface SaveButtonProps {
   rfInstance: any;
 }
@@ -30,9 +31,11 @@ const SaveButton: React.FC<SaveButtonProps> = ({ rfInstance }) => {
   }, [rfInstance, router]);
 
   return (
-    <button type="button" onClick={handleSave}>
-      <FiSave />
-    </button>
+    <Container>
+      <button type="button" onClick={handleSave}>
+        <FiSave />
+      </button>
+    </Container>
   );
 };
 

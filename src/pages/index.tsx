@@ -304,7 +304,9 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance }) => {
     <Container ref={reactFlowWrapper}>
       <div style={{ width: '100%' }}>
         <LogicGatesBar />
-        <div>
+        <div
+          style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}
+        >
           <SaveButton rfInstance={reactFlowInstance} />
           <RefreshButton />
         </div>
