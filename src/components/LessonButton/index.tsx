@@ -3,15 +3,15 @@ import { FiCheck } from 'react-icons/fi';
 
 import { Container } from './styles';
 
-interface StepButtonProp extends ButtonHTMLAttributes<HTMLButtonElement> {
-  stepNumber: string;
-  currentlySelectedStep: string;
+interface LessonButtonProp extends ButtonHTMLAttributes<HTMLButtonElement> {
+  lessonNumber: string;
+  currentlySelectedLesson: string;
 }
 
-const StepButton: React.FC<StepButtonProp> = ({
+const LessonButton: React.FC<LessonButtonProp> = ({
   children,
-  stepNumber,
-  currentlySelectedStep,
+  lessonNumber,
+  currentlySelectedLesson,
   ...rest
 }) => {
   const [done, setDone] = useState(false);
@@ -21,9 +21,12 @@ const StepButton: React.FC<StepButtonProp> = ({
   }, []);
 
   return (
-    <Container isDone={done} isSelected={currentlySelectedStep === stepNumber}>
+    <Container
+      isDone={done}
+      isSelected={currentlySelectedLesson === lessonNumber}
+    >
       <button type="button" onClick={handleClick}>
-        {done ? <FiCheck /> : stepNumber}
+        {done ? <FiCheck /> : lessonNumber}
       </button>
       <button type="button" {...rest}>
         {children}
@@ -32,4 +35,4 @@ const StepButton: React.FC<StepButtonProp> = ({
   );
 };
 
-export default StepButton;
+export default LessonButton;

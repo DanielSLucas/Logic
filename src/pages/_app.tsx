@@ -12,14 +12,14 @@ import SideBar from '../components/SideBar';
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => (
   <ThemeProvider theme={defaultTheme}>
     <GlobalStyle />
-    <Container>
-      <main>
-        <SideBar />
-        <AppProvider>
+    <AppProvider>
+      <Container>
+        <main>
+          <SideBar />
           <Component {...pageProps} />
-        </AppProvider>
-      </main>
-    </Container>
+        </main>
+      </Container>
+    </AppProvider>
   </ThemeProvider>
 );
 

@@ -1,9 +1,12 @@
 import { ReactFlowProvider } from 'react-flow-renderer';
 import { ElementsProvider } from './elements';
+import { ToastProvider } from './toasts';
 
 const AppProvider: React.FC = ({ children }) => (
   <ElementsProvider>
-    <ReactFlowProvider>{children}</ReactFlowProvider>
+    <ReactFlowProvider>
+      <ToastProvider>{children}</ToastProvider>
+    </ReactFlowProvider>
   </ElementsProvider>
 );
 

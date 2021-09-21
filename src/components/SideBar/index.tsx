@@ -1,87 +1,102 @@
-import { useCallback, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { FiMail } from 'react-icons/fi';
-import { useRouter } from 'next/router';
-import StepButton from '../StepButton';
+import { useToast } from '../../hooks/toasts';
+import StepButton from '../LessonButton';
 import { Container, Title } from './styles';
 
 const SideBar: React.FC = () => {
-  const router = useRouter();
-  const [currentlySelectedStep, setCurrentlySelectedStep] = useState('');
+  const { addToast, removeToast, isShowingAnToast } = useToast();
+  const [idOfCurrentlyVisibleToast, setIdOfCurrentlyVisibleToast] =
+    useState('');
+  const [currentlySelectedLesson, setCurrentlySelectedLesson] = useState('');
 
-  const handleStepClick = useCallback(
-    (route: string, step: string) => {
-      setCurrentlySelectedStep(step);
-      router.push(route);
+  const handleLessonClick = useCallback(
+    (title: string, content: ReactNode, lesson: string) => {
+      if (isShowingAnToast) removeToast(idOfCurrentlyVisibleToast);
+
+      setTimeout(
+        () => {
+          const toast = addToast({
+            title,
+            content,
+          });
+          setIdOfCurrentlyVisibleToast(toast.id);
+          setCurrentlySelectedLesson(lesson);
+        },
+        isShowingAnToast ? 700 : 0,
+      );
     },
-    [router],
+    [addToast, idOfCurrentlyVisibleToast, isShowingAnToast, removeToast],
   );
+
+  useEffect(() => {
+    if (!isShowingAnToast) {
+      setCurrentlySelectedLesson('');
+    }
+  }, [isShowingAnToast]);
 
   return (
     <Container>
-      <Title>
-        <button type="button" onClick={() => handleStepClick('/', '')}>
-          Logic
-        </button>
-      </Title>
+      <Title>Logic</Title>
       <div className="divider" />
       <nav>
         <ul>
           <li>
             <StepButton
-              stepNumber="0"
-              currentlySelectedStep={currentlySelectedStep}
+              lessonNumber="0"
+              currentlySelectedLesson={currentlySelectedLesson}
               type="button"
-              onClick={() => handleStepClick('/learn/and', '0')}
+              onClick={() => handleLessonClick('Passo 0', <></>, '0')}
             >
               Passo 0
             </StepButton>
           </li>
           <li>
             <StepButton
-              stepNumber="1"
-              currentlySelectedStep={currentlySelectedStep}
+              lessonNumber="1"
+              currentlySelectedLesson={currentlySelectedLesson}
               type="button"
-              onClick={() => handleStepClick('/learn/Passo 1', '1')}
+              onClick={() => handleLessonClick('Passo 1', <></>, '1')}
             >
               Passo 1
             </StepButton>
           </li>
           <li>
             <StepButton
-              stepNumber="2"
-              currentlySelectedStep={currentlySelectedStep}
+              lessonNumber="2"
+              currentlySelectedLesson={currentlySelectedLesson}
               type="button"
-              onClick={() => handleStepClick('/learn/Passo 2', '2')}
+              onClick={() => handleLessonClick('Passo 2', <></>, '2')}
             >
               Passo 2
             </StepButton>
           </li>
           <li>
             <StepButton
-              stepNumber="3"
-              currentlySelectedStep={currentlySelectedStep}
+              lessonNumber="3"
+              currentlySelectedLesson={currentlySelectedLesson}
               type="button"
-              onClick={() => handleStepClick('/learn/Passo 3', '3')}
+              onClick={() => handleLessonClick('Passo 3', <></>, '3')}
             >
               Passo 3
             </StepButton>
           </li>
           <li>
             <StepButton
-              stepNumber="4"
-              currentlySelectedStep={currentlySelectedStep}
+              lessonNumber="4"
+              currentlySelectedLesson={currentlySelectedLesson}
               type="button"
-              onClick={() => handleStepClick('/learn/Passo 4', '4')}
+              onClick={() => handleLessonClick('Passo 4', <></>, '4')}
             >
               Passo 4
             </StepButton>
           </li>
           <li>
             <StepButton
-              stepNumber="5"
-              currentlySelectedStep={currentlySelectedStep}
+              lessonNumber="5"
+              currentlySelectedLesson={currentlySelectedLesson}
               type="button"
-              onClick={() => handleStepClick('/learn/Passo 5', '5')}
+              onClick={() => handleLessonClick('Passo 5', <></>, '5')}
             >
               Passo 5
             </StepButton>
