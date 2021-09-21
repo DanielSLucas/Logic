@@ -1,15 +1,19 @@
+/* eslint-disable react/no-danger */
 import { useCallback } from 'react';
 import { FiX } from 'react-icons/fi';
+import PrismicDOM from 'prismic-dom';
+import Image from 'next/image';
+
 import { IToast, useToast } from '../../../hooks/toasts';
 
-import { Container } from './styles';
+import { Container, Content } from './styles';
 
-interface ExplanationProps {
+interface ToastProps {
   toast: IToast;
   style: Record<string, unknown>;
 }
 
-const Explanation: React.FC<ExplanationProps> = ({ toast, style }) => {
+const Toast: React.FC<ToastProps> = ({ toast, style }) => {
   const { removeToast } = useToast();
 
   const handleClick = useCallback(() => {
@@ -24,10 +28,50 @@ const Explanation: React.FC<ExplanationProps> = ({ toast, style }) => {
           <FiX />
         </button>
       </header>
-      <div />
-      {toast.content}
+      <div className="divider" />
+      <Content>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: PrismicDOM.RichText.asHtml(toast.content.data.introduction),
+          }}
+        />
+
+        <div
+          dangerouslySetInnerHTML={{
+            __html: PrismicDOM.RichText.asHtml(toast.content.data.image_title),
+          }}
+        />
+
+        <Image
+          src={toast.content.data.main_image.url}
+          width={toast.content.data.main_image.dimensions.width}
+          height={toast.content.data.main_image.dimensions.height}
+        />
+
+        <div
+          dangerouslySetInnerHTML={{
+            __html: PrismicDOM.RichText.asHtml(
+              toast.content.data.truth_table_title,
+            ),
+          }}
+        />
+
+        <div
+          dangerouslySetInnerHTML={{
+            __html: PrismicDOM.RichText.asText(toast.content.data.truth_table),
+          }}
+        />
+
+        <div
+          dangerouslySetInnerHTML={{
+            __html: PrismicDOM.RichText.asHtml(
+              toast.content.data.additional_content,
+            ),
+          }}
+        />
+      </Content>
     </Container>
   );
 };
 
-export default Explanation;
+export default Toast;

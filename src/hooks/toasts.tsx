@@ -1,10 +1,5 @@
-import {
-  useContext,
-  useCallback,
-  createContext,
-  useState,
-  ReactNode,
-} from 'react';
+import { useContext, useCallback, createContext, useState } from 'react';
+import { Document } from '@prismicio/client/types/documents';
 import { v4 as uuid } from 'uuid';
 import ToastContainer from '../components/ToastContainer';
 
@@ -19,7 +14,7 @@ const ToastContext = createContext<ToastContexData>({} as ToastContexData);
 export interface IToast {
   id: string;
   title: string;
-  content: ReactNode;
+  content: Document;
 }
 
 const ToastProvider: React.FC = ({ children }) => {

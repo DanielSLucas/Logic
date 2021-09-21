@@ -56,7 +56,7 @@ export const Container = styled(animated.div)`
     }
   }
 
-  & > div {
+  div.divider {
     background: #d3d3d3;
     width: 100%;
     height: 1px;
@@ -66,5 +66,38 @@ export const Container = styled(animated.div)`
   p {
     text-align: justify;
     font: 1rem Roboto, arial, sans-serif;
+  }
+`;
+
+export const Content = styled.div`
+  margin-top: 1rem;
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  h2 {
+    margin: 1rem 0;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  table {
+    border-collapse: collapse;
+    height: 10rem;
+    width: 15rem;
+    text-align: center;
+    table-layout: fixed;
+    margin: 0 auto;
+  }
+
+  table td {
+    border: 1px solid black;
+  }
+
+  table th {
+    border: 1px solid black;
   }
 `;
