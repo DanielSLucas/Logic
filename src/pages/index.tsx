@@ -34,10 +34,11 @@ import Xor from '../components/nodes/Xor';
 import Xnor from '../components/nodes/Xnor';
 import Display from '../components/nodes/Display';
 
-import { Container } from '../styles/Main';
+import { Container, ReactFlowContainer } from '../styles/Main';
 import SaveButton from '../components/SaveButton';
 import RefreshButton from '../components/RefreshButton';
 import { useElements } from '../hooks/elements';
+import SideBar from '../components/SideBar';
 
 const nodeTypes = {
   and: And,
@@ -301,34 +302,43 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance }) => {
   );
 
   return (
-    <Container ref={reactFlowWrapper}>
-      <div style={{ width: '100%' }}>
-        <LogicGatesBar />
-        <div
-          style={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}
-        >
-          <SaveButton rfInstance={reactFlowInstance} />
-          <RefreshButton />
-        </div>
-      </div>
+    <Container>
+      <main>
+        <SideBar />
+        <ReactFlowContainer ref={reactFlowWrapper}>
+          <div style={{ width: '100%' }}>
+            <LogicGatesBar />
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <SaveButton rfInstance={reactFlowInstance} />
+              <RefreshButton />
+            </div>
+          </div>
 
-      <ReactFlow
-        onLoad={handleLoad}
-        elements={elements}
-        nodeTypes={nodeTypes}
-        onElementClick={handleElementClick}
-        onPaneClick={handlePaneClick}
-        deleteKeyCode="Delete"
-        onElementsRemove={handleElementsRemove}
-        onNodeMouseEnter={handleNodeMouseEnter}
-        onNodeMouseLeave={handleNodeMouseLeave}
-        onConnect={handleConnect}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-      >
-        <Controls />
-        <MiniMap nodeColor="#eee" nodeStrokeWidth={3} />
-      </ReactFlow>
+          <ReactFlow
+            onLoad={handleLoad}
+            elements={elements}
+            nodeTypes={nodeTypes}
+            onElementClick={handleElementClick}
+            onPaneClick={handlePaneClick}
+            deleteKeyCode="Delete"
+            onElementsRemove={handleElementsRemove}
+            onNodeMouseEnter={handleNodeMouseEnter}
+            onNodeMouseLeave={handleNodeMouseLeave}
+            onConnect={handleConnect}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+          >
+            <Controls />
+            <MiniMap nodeColor="#eee" nodeStrokeWidth={3} />
+          </ReactFlow>
+        </ReactFlowContainer>
+      </main>
     </Container>
   );
 };
