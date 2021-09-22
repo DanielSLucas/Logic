@@ -22,7 +22,7 @@ import ReactFlow, {
   useZoomPanHelper,
 } from 'react-flow-renderer';
 
-import { GetServerSideProps, GetStaticProps } from 'next';
+import { GetServerSideProps } from 'next';
 import updateElements from '../utils/updateElements';
 
 import LogicGatesBar from '../components/LogicGatesBar';
@@ -39,7 +39,6 @@ import Display from '../components/nodes/Display';
 
 import { Container, ReactFlowContainer } from '../styles/Main';
 import SaveButton from '../components/SaveButton';
-import RefreshButton from '../components/RefreshButton';
 import { useElements } from '../hooks/elements';
 import SideBar from '../components/SideBar';
 import { client } from '../lib/prismic';
@@ -321,7 +320,6 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
               }}
             >
               <SaveButton rfInstance={reactFlowInstance} />
-              <RefreshButton />
             </div>
           </div>
 
