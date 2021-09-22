@@ -15,7 +15,7 @@ const SaveButton: React.FC<SaveButtonProps> = ({ rfInstance }) => {
     const circuitId = router.query.id ? `?id=${router.query.id}` : '';
 
     const response = await fetch(
-      `http://localhost:3000/api/circuit${circuitId}`,
+      `${process.env.NEXT_PUBLIC_URL}/api/circuit${circuitId}`,
       {
         method: circuitId ? 'PUT' : 'POST',
         headers: {
@@ -27,7 +27,9 @@ const SaveButton: React.FC<SaveButtonProps> = ({ rfInstance }) => {
 
     response
       .json()
-      .then(data => router.replace(`http://localhost:3000/?id=${data.id}`));
+      .then(data =>
+        router.replace(`${process.env.NEXT_PUBLIC_URL}/?id=${data.id}`),
+      );
   }, [rfInstance, router]);
 
   return (
