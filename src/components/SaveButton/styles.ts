@@ -5,8 +5,16 @@ export const Container = styled.div`
   button {
     background: ${props => props.theme.colors.whiteBackground};
     padding: 3px;
+
     border: 1px solid ${props => props.theme.colors.border};
     border-radius: 0.25rem;
+
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
+
+    &:active {
+      transform: translateY(3px);
+      box-shadow: none;
+    }
 
     svg {
       height: 1.5rem;
