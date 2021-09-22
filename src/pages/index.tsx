@@ -1,8 +1,11 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Prismic from '@prismicio/client';
+import { Document } from '@prismicio/client/types/documents';
 
 import ReactFlow, {
   Edge,
@@ -19,7 +22,7 @@ import ReactFlow, {
   useZoomPanHelper,
 } from 'react-flow-renderer';
 
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, GetStaticProps } from 'next';
 import updateElements from '../utils/updateElements';
 
 import LogicGatesBar from '../components/LogicGatesBar';
@@ -39,6 +42,7 @@ import SaveButton from '../components/SaveButton';
 import RefreshButton from '../components/RefreshButton';
 import { useElements } from '../hooks/elements';
 import SideBar from '../components/SideBar';
+import { client } from '../lib/prismic';
 
 const nodeTypes = {
   and: And,
@@ -57,9 +61,10 @@ const getId = () => `dndnode_${id++}`;
 
 interface MainProps {
   initalFlowInstance: FlowExportObject;
+  lessons: Document[];
 }
 
-const Main: React.FC<MainProps> = ({ initalFlowInstance }) => {
+const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
   const router = useRouter();
   const { elements, setElements } = useElements();
   const reactFlowWrapper = useRef<HTMLDivElement>({} as HTMLDivElement);
@@ -304,7 +309,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance }) => {
   return (
     <Container>
       <main>
-        <SideBar />
+        <SideBar lessons={lessons} />
         <ReactFlowContainer ref={reactFlowWrapper}>
           <div style={{ width: '100%' }}>
             <LogicGatesBar />
@@ -351,7 +356,7 @@ export const getServerSideProps: GetServerSideProps<MainProps> =
 
     if (context.query.id) {
       const response = await fetch(
-        `http://localhost:3000/api/circuit?id=${context.query.id}`,
+        `${process.env.NEXT_PUBLIC_URL}/api/circuit?id=${context.query.id}`,
         {
           method: 'GET',
         },
@@ -362,9 +367,19 @@ export const getServerSideProps: GetServerSideProps<MainProps> =
       initalFlowInstance = data.reactFlowInstance as FlowExportObject;
     }
 
+    const response = await client().query([
+      Prismic.Predicates.at('document.type', 'lesson'),
+    ]);
+
+    const lessons = response.results.sort(
+      (lessonA, lessonB) =>
+        lessonA.data.lesson_number - lessonB.data.lesson_number,
+    );
+
     return {
       props: {
         initalFlowInstance,
+        lessons,
       },
     };
   };

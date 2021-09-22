@@ -1,34 +1,22 @@
 import { useCallback, useEffect, useState } from 'react';
-import Prismic from '@prismicio/client';
 import PrismicDOM from 'prismic-dom';
 import { Document } from '@prismicio/client/types/documents';
 import { FiMail } from 'react-icons/fi';
 
 import { useToast } from '../../hooks/toasts';
-import { client } from '../../lib/prismic';
 import LessonButton from '../LessonButton';
 
 import { Container, Title } from './styles';
 
-const SideBar: React.FC = () => {
-  const [lessons, setLessons] = useState<Document[]>([]);
+interface SideBarProps {
+  lessons: Document[];
+}
+
+const SideBar: React.FC<SideBarProps> = ({ lessons }) => {
   const { addToast, removeToast, isShowingAnToast } = useToast();
   const [idOfCurrentlyVisibleToast, setIdOfCurrentlyVisibleToast] =
     useState('');
   const [currentlySelectedLesson, setCurrentlySelectedLesson] = useState('');
-
-  useEffect(() => {
-    client()
-      .query([Prismic.Predicates.at('document.type', 'lesson')])
-      .then(response =>
-        setLessons(
-          response.results.sort(
-            (lessonA, lessonB) =>
-              lessonA.data.lesson_number - lessonB.data.lesson_number,
-          ),
-        ),
-      );
-  }, []);
 
   const handleLessonClick = useCallback(
     (title: string, content: Document, lesson: string) => {
