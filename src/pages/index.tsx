@@ -310,17 +310,9 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
       <main>
         <SideBar lessons={lessons} />
         <ReactFlowContainer ref={reactFlowWrapper}>
-          <div style={{ width: '100%' }}>
+          <div style={{ width: '100%', position: 'relative' }}>
             <LogicGatesBar />
-            <div
-              style={{
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <SaveButton rfInstance={reactFlowInstance} />
-            </div>
+            <SaveButton rfInstance={reactFlowInstance} />
           </div>
 
           <ReactFlow

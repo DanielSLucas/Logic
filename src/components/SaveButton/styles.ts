@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  position: absolute;
+  right: 0;
+  z-index: 999;
+
   margin: 0.5rem 0.25rem;
+
   button {
+    position: relative;
     background: ${props => props.theme.colors.whiteBackground};
     padding: 3px;
 
@@ -14,6 +20,13 @@ export const Container = styled.div`
     &:active {
       transform: translateY(3px);
       box-shadow: none;
+    }
+
+    &:hover::before {
+      content: 'Save';
+      position: absolute;
+      bottom: -1.5rem;
+      right: 0;
     }
 
     svg {
