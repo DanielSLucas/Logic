@@ -9,7 +9,8 @@ interface NorProps {
     nodeId: string;
     output?: number;
     inputs?: {
-      origin: string;
+      sourceNode: string;
+      targetHandle: string;
       value: string;
     }[];
     setElements: any;
@@ -18,12 +19,12 @@ interface NorProps {
 
 const Nor: React.FC<NorProps> = ({ data }) => {
   return (
-    <Container isSelected={data.isSelected}>
+    <Container isSelected={data.isSelected} isHovered={data.isHovered}>
       <Handle
         type="target"
         id="a"
         position={Position.Left}
-        style={{ top: '70%', borderRadius: 0 }}
+        style={{ top: '70%', borderRadius: 0, zIndex: 100 }}
         isConnectable
       />
 
@@ -91,6 +92,14 @@ const Nor: React.FC<NorProps> = ({ data }) => {
           </>
         )}
       </svg>
+
+      <span className="inputA">
+        {data.inputs?.find(input => input.targetHandle === 'a')?.value}
+      </span>
+      <span className="inputB">
+        {data.inputs?.find(input => input.targetHandle === 'b')?.value}
+      </span>
+      <span className="output">{data.output && data.output}</span>
 
       <Handle
         type="target"

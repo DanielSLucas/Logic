@@ -14,6 +14,7 @@ export const Container = styled.div<ContainerProps>`
   padding-top: 2.5px;
 
   svg {
+    position: relative;
     width: 6rem;
     height: 100%;
     stroke: #323232;
@@ -26,9 +27,34 @@ export const Container = styled.div<ContainerProps>`
       `}
   }
 
-  /* ${props =>
+  span {
+    display: none;
+    opacity: 0.3;
+  }
+
+  ${props =>
     props.isHovered &&
     css`
-      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
-    `} */
+      span {
+        display: inherit;
+
+        &.inputA {
+          position: absolute;
+          bottom: 1rem;
+          left: 0.5rem;
+        }
+
+        &.inputB {
+          position: absolute;
+          top: 1rem;
+          left: 0.5rem;
+        }
+
+        &.output {
+          position: absolute;
+          top: 2rem;
+          right: 0.5rem;
+        }
+      }
+    `}
 `;

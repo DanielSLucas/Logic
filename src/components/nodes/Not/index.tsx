@@ -9,7 +9,8 @@ interface NotProps {
     nodeId: string;
     output?: number;
     inputs?: {
-      origin: string;
+      sourceNode: string;
+      targetHandle: string;
       value: string;
     }[];
     setElements: any;
@@ -18,7 +19,7 @@ interface NotProps {
 
 const Not: React.FC<NotProps> = ({ data }) => {
   return (
-    <Container isSelected={data.isSelected}>
+    <Container isSelected={data.isSelected} isHovered={data.isHovered}>
       <Handle
         type="target"
         id="a"
@@ -91,6 +92,11 @@ const Not: React.FC<NotProps> = ({ data }) => {
           </>
         )}
       </svg>
+
+      <span className="inputA">
+        {data.inputs?.find(input => input.targetHandle === 'a')?.value}
+      </span>
+      <span className="output">{data.output && data.output}</span>
 
       <Handle
         type="source"
