@@ -44,10 +44,6 @@ export default class MyDocument extends Document {
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <meta name="theme-color" content="#0E5487" />
-          <meta
-            name="description"
-            content="A site to teach and simulate logical circuits"
-          />
 
           <link
             rel="apple-touch-icon"
@@ -78,8 +74,6 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap"
             rel="stylesheet"
           />
-
-          <title>Logic</title>
         </Head>
         <body>
           <Main />
