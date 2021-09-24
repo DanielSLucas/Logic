@@ -1,5 +1,6 @@
-import { ButtonHTMLAttributes, useCallback, useState } from 'react';
+import { ButtonHTMLAttributes, useCallback, useEffect, useState } from 'react';
 import { FiCheck } from 'react-icons/fi';
+import Cookies from 'js-cookie';
 
 import { Container } from './styles';
 
@@ -16,9 +17,15 @@ const LessonButton: React.FC<LessonButtonProp> = ({
 }) => {
   const [done, setDone] = useState(false);
 
+  useEffect(() => {
+    setDone(!!Cookies.get(`lesson${lessonNumber}`));
+  }, []);
+
   const handleClick = useCallback(() => {
     setDone(state => !state);
-  }, []);
+    if (!done) Cookies.set(`lesson${lessonNumber}`, String(!done));
+    else Cookies.remove(`lesson${lessonNumber}`);
+  }, [done, lessonNumber]);
 
   return (
     <Container

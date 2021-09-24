@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prismicio/client": "^5.1.0",
+    "js-cookie": "^3.0.1",
     "mongoose": "^6.0.5",
     "next": "11.1.2",
     "prismic-dom": "^2.2.6",
@@ -23,6 +24,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/js-cookie": "^2.2.7",
     "@types/node": "^16.9.1",
     "@types/prismic-dom": "^2.1.1",
     "@types/react": "^17.0.20",

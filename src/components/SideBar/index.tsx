@@ -49,17 +49,17 @@ const SideBar: React.FC<SideBarProps> = ({ lessons }) => {
       <div className="divider" />
       <nav>
         <ul>
-          {lessons.map((lesson, index) => (
+          {lessons.map(lesson => (
             <li key={lesson.id}>
               <LessonButton
-                lessonNumber={(index + 1).toString()}
+                lessonNumber={String(lesson.data.lesson_number)}
                 currentlySelectedLesson={currentlySelectedLesson}
                 type="button"
                 onClick={() =>
                   handleLessonClick(
                     PrismicDOM.RichText.asText(lesson.data.title),
                     lesson,
-                    (index + 1).toString(),
+                    String(lesson.data.lesson_number),
                   )
                 }
               >
