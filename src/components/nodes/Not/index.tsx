@@ -25,7 +25,7 @@ const Not: React.FC<NotProps> = ({ data }) => {
         id="a"
         position={Position.Left}
         isConnectable
-        style={{ borderRadius: 0 }}
+        style={{ borderRadius: 0, zIndex: 100 }}
       />
 
       <svg
