@@ -23,6 +23,7 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 
 import { GetServerSideProps } from 'next';
+import { FiMail } from 'react-icons/fi';
 import updateElements from '../utils/updateElements';
 
 import LogicGatesBar from '../components/LogicGatesBar';
@@ -37,11 +38,16 @@ import Xor from '../components/nodes/Xor';
 import Xnor from '../components/nodes/Xnor';
 import Display from '../components/nodes/Display';
 
-import { Container, ReactFlowContainer } from '../styles/Main';
+import {
+  Container,
+  ReactFlowContainer,
+  ScreenSizeWarning,
+} from '../styles/Main';
 import SaveButton from '../components/SaveButton';
 import { useElements } from '../hooks/elements';
 import SideBar from '../components/SideBar';
 import { client } from '../lib/prismic';
+import SEO from '../components/SEO';
 
 const nodeTypes = {
   and: And,
@@ -306,35 +312,56 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
   );
 
   return (
-    <Container>
-      <main>
-        <SideBar lessons={lessons} />
-        <ReactFlowContainer ref={reactFlowWrapper}>
-          <div style={{ width: '100%', position: 'relative' }}>
-            <LogicGatesBar />
-            <SaveButton rfInstance={reactFlowInstance} />
-          </div>
+    <>
+      <SEO
+        title="Logic"
+        description="Um site para ensinar e simular circuitos lógicos."
+        shouldExludeTitleSuffix
+      />
 
-          <ReactFlow
-            onLoad={handleLoad}
-            elements={elements}
-            nodeTypes={nodeTypes}
-            onElementClick={handleElementClick}
-            onPaneClick={handlePaneClick}
-            deleteKeyCode="Delete"
-            onElementsRemove={handleElementsRemove}
-            onNodeMouseEnter={handleNodeMouseEnter}
-            onNodeMouseLeave={handleNodeMouseLeave}
-            onConnect={handleConnect}
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-          >
-            <Controls />
-            <MiniMap nodeColor="#eee" nodeStrokeWidth={3} />
-          </ReactFlow>
-        </ReactFlowContainer>
-      </main>
-    </Container>
+      <ScreenSizeWarning>
+        <h1>Logic</h1>
+        <p>
+          Este site suporta apenas dipositivos com mais de 1024px de largura.
+        </p>
+        <footer>
+          <a href="mailto:daniellucas-pms@hotmail.com">
+            <FiMail />
+            Contact us!
+          </a>
+        </footer>
+      </ScreenSizeWarning>
+
+      <Container>
+        <main>
+          <SideBar lessons={lessons} />
+          <ReactFlowContainer ref={reactFlowWrapper}>
+            <div style={{ width: '100%', position: 'relative' }}>
+              <LogicGatesBar />
+              <SaveButton rfInstance={reactFlowInstance} />
+            </div>
+
+            <ReactFlow
+              onLoad={handleLoad}
+              elements={elements}
+              nodeTypes={nodeTypes}
+              onElementClick={handleElementClick}
+              onPaneClick={handlePaneClick}
+              deleteKeyCode="Delete"
+              onElementsRemove={handleElementsRemove}
+              onNodeMouseEnter={handleNodeMouseEnter}
+              onNodeMouseLeave={handleNodeMouseLeave}
+              onConnect={handleConnect}
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+            >
+              <Controls />
+              <MiniMap nodeColor="#eee" nodeStrokeWidth={3} />
+            </ReactFlow>
+          </ReactFlowContainer>
+        </main>
+      </Container>
+    </>
   );
 };
 
