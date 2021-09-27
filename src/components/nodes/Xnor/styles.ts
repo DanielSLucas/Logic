@@ -55,7 +55,7 @@ export const Container = styled.div<ContainerProps>`
         &.output {
           position: absolute;
           top: 2rem;
-          right: 0.5rem;
+          right: 1.2rem;
         }
       }
     `}
