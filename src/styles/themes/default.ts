@@ -7,9 +7,9 @@ const defaultTheme = {
 
     background: '#f3f3f3',
     lighterBackground: '#fafafc',
+
     hoverBackground: '#f4f6ff',
     doneHoverBackground: '#266593',
-
     checkIcon: '#fff',
 
     nodeStroke: '#323232',

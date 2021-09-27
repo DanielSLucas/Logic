@@ -2,10 +2,17 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React, { useRef, useState, useCallback, useEffect } from 'react';
+import React, {
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+  useContext,
+} from 'react';
 import { useRouter } from 'next/router';
 import Prismic from '@prismicio/client';
 import { Document } from '@prismicio/client/types/documents';
+import { ThemeContext } from 'styled-components';
 
 import ReactFlow, {
   Edge,
@@ -71,6 +78,7 @@ interface MainProps {
 
 const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
   const router = useRouter();
+  const theme = useContext(ThemeContext);
   const { elements, setElements } = useElements();
   const reactFlowWrapper = useRef<HTMLDivElement>({} as HTMLDivElement);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
@@ -356,7 +364,16 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
               onDragOver={handleDragOver}
             >
               <Controls />
-              <MiniMap nodeColor="#eee" nodeStrokeWidth={3} />
+              <MiniMap
+                style={{
+                  backgroundColor:
+                    theme.colors.background === '#28262E'
+                      ? theme.colors.background
+                      : '',
+                }}
+                nodeColor={theme.colors.lighterBorder}
+                nodeStrokeWidth={3}
+              />
             </ReactFlow>
           </ReactFlowContainer>
         </main>

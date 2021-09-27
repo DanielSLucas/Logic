@@ -24,6 +24,10 @@ export const Container = styled.div<ContainerProps>`
 
   transition: box-shadow 0.3s;
 
+  button {
+    color: ${props => props.theme.colors.text};
+  }
+
   ${props =>
     props.isSelected &&
     css`

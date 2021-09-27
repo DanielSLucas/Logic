@@ -30,6 +30,23 @@ export const ReactFlowContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  div.react-flow__controls {
+    background: ${props => props.theme.colors.lighterBackground};
+
+    button.react-flow__controls-button {
+      background: ${props => props.theme.colors.lighterBackground};
+      border-color: ${props => props.theme.colors.border};
+
+      svg {
+        fill: ${props => props.theme.colors.text};
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
 `;
 
 export const ScreenSizeWarning = styled.div`
