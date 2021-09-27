@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FiSave } from 'react-icons/fi';
 
-import { Container } from './styles';
+import { Container, Loader } from './styles';
 
 interface SaveButtonProps {
   rfInstance: any;
@@ -10,8 +10,10 @@ interface SaveButtonProps {
 
 const SaveButton: React.FC<SaveButtonProps> = ({ rfInstance }) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSave = useCallback(async () => {
+    setIsLoading(true);
     const circuitId = router.query.id ? `?id=${router.query.id}` : '';
 
     const response = await fetch(
@@ -25,17 +27,16 @@ const SaveButton: React.FC<SaveButtonProps> = ({ rfInstance }) => {
       },
     );
 
-    response
-      .json()
-      .then(data =>
-        router.replace(`${process.env.NEXT_PUBLIC_URL}/?id=${data.id}`),
-      );
+    response.json().then(data => {
+      router.replace(`${process.env.NEXT_PUBLIC_URL}/?id=${data.id}`);
+      setIsLoading(false);
+    });
   }, [rfInstance, router]);
 
   return (
     <Container>
       <button type="button" onClick={handleSave}>
-        <FiSave />
+        {isLoading ? <Loader /> : <FiSave />}
       </button>
     </Container>
   );

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   position: absolute;
@@ -35,4 +35,19 @@ export const Container = styled.div`
       color: ${props => props.theme.colors.secondary};
     }
   }
+`;
+
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+export const Loader = styled.div`
+  border: 2px solid ${props => props.theme.colors.border};
+  border-radius: 50%;
+  border-top: 2px solid ${props => props.theme.colors.secondary};
+  width: 1.5rem;
+  height: 1.5rem;
+  -webkit-animation: ${spin} 2s linear infinite; /* Safari */
+  animation: ${spin} 2s linear infinite;
 `;
