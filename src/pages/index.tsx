@@ -55,6 +55,7 @@ import { useElements } from '../hooks/elements';
 import SideBar from '../components/SideBar';
 import { client } from '../lib/prismic';
 import SEO from '../components/SEO';
+import TabsBar from '../components/TabsBar';
 
 const nodeTypes = {
   and: And,
@@ -347,6 +348,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
             <div style={{ width: '100%', position: 'relative' }}>
               <LogicGatesBar />
               <SaveButton rfInstance={reactFlowInstance} />
+              <TabsBar />
             </div>
 
             <ReactFlow
