@@ -23,7 +23,7 @@ export const Container = styled.aside`
     padding: 1rem;
     margin-left: 0.5rem;
 
-    border: 1px solid #eee;
+    border: 1px solid ${props => props.theme.colors.lighterBorder};
     border-radius: 0.5rem;
 
     transition: box-shadow 0.2s;
@@ -34,11 +34,11 @@ export const Container = styled.aside`
     svg {
       width: 2rem;
       height: 100%;
-      stroke: #323232;
+      stroke: ${props => props.theme.colors.nodeStroke};
     }
 
     &:hover {
-      box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
+      box-shadow: 1px 3px 5px ${props => props.theme.colors.shadow};
     }
 
     &:first-child {

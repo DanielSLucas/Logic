@@ -15,7 +15,7 @@ export const Container = styled.div<ContainerProps>`
   align-items: center;
   justify-content: flex-start;
 
-  color: black;
+  color: ${props => props.theme.colors.text};
   text-align: left;
   font: 1.125rem Roboto, arial, sans-serif;
 
@@ -51,7 +51,7 @@ export const Container = styled.div<ContainerProps>`
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #f4f6ff;
+      background-color: ${props => props.theme.colors.hoverBackground};
     }
 
     ${props =>
@@ -61,17 +61,17 @@ export const Container = styled.div<ContainerProps>`
         svg {
           width: 1.5rem;
           height: 1.5rem;
-          color: #fff;
+          color: ${props.theme.colors.checkIcon};
         }
 
         &:hover {
-          background-color: #266593;
+          background-color: ${props.theme.colors.doneHoverBackground};
         }
       `}
   }
 
   &:hover {
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 3px ${props => props.theme.colors.shadow};
   }
 
   button:last-child {
@@ -89,7 +89,7 @@ export const Container = styled.div<ContainerProps>`
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #f4f6ff;
+      background-color: ${props => props.theme.colors.hoverBackground};
     }
   }
 `;

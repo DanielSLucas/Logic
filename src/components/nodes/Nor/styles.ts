@@ -16,7 +16,7 @@ export const Container = styled.div<ContainerProps>`
     position: relative;
     width: 6.8rem;
     height: 100%;
-    stroke: #323232;
+    stroke: ${props => props.theme.colors.nodeStroke};
     fill: ${props => props.theme.colors.background};
 
     ${props =>

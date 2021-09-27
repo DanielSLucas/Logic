@@ -42,7 +42,7 @@ export const ScreenSizeWarning = styled.div`
 
   width: 100%;
   height: 100%;
-  background: #fafafc;
+  background: ${props => props.theme.colors.lighterBackground};
 
   display: none;
   flex-direction: column;

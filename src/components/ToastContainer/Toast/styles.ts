@@ -13,13 +13,13 @@ export const Container = styled(animated.div)`
   position: relative;
   z-index: 999;
 
-  background: #fafafc;
-  border: 1px solid #d3d3d3;
+  background: ${props => props.theme.colors.lighterBackground};
+  border: 1px solid ${props => props.theme.colors.border};
   border-radius: 0.5rem;
 
   padding: 0.5rem 1rem;
 
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
+  box-shadow: 3px 3px 5px ${props => props.theme.colors.shadow};
 
   header {
     display: flex;
@@ -27,7 +27,7 @@ export const Container = styled(animated.div)`
     justify-content: space-between;
 
     h2 {
-      color: #0e5487;
+      color: ${props => props.theme.colors.primary};
       font: 1.5rem Roboto Condensed, serif;
     }
 
@@ -39,25 +39,25 @@ export const Container = styled(animated.div)`
     button {
       background: none;
       border: none;
-      color: #d3d3d3;
+      color: ${props => props.theme.colors.border};
     }
 
     button:hover {
       svg {
-        color: #a3a3a3;
+        color: ${props => props.theme.colors.toastCloseButton};
       }
     }
 
     button:active {
       svg {
-        color: #a3a3a3;
+        color: ${props => props.theme.colors.toastCloseButton};
         transform: translateY(2px);
       }
     }
   }
 
   div.divider {
-    background: #d3d3d3;
+    background: ${props => props.theme.colors.border};
     width: 100%;
     height: 1px;
     margin: 0.5rem 0;

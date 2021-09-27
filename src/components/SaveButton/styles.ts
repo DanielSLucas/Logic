@@ -9,13 +9,13 @@ export const Container = styled.div`
 
   button {
     position: relative;
-    background: ${props => props.theme.colors.whiteBackground};
+    background: ${props => props.theme.colors.lighterBackground};
     padding: 3px;
 
     border: 1px solid ${props => props.theme.colors.border};
     border-radius: 0.25rem;
 
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 3px ${props => props.theme.colors.shadow};
 
     &:active {
       transform: translateY(3px);

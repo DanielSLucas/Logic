@@ -3,12 +3,16 @@ import styled from 'styled-components';
 export const Container = styled.aside`
   height: 100%;
   width: 16rem;
+  background: ${props => props.theme.colors.lighterBackground};
+
   border-right: 1px solid ${props => props.theme.colors.border};
-  background: ${props => props.theme.colors.whiteBackground};
+  border-radius: 0 0.25rem 0.25rem 0;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  box-shadow: 0px 1px 5px ${props => props.theme.colors.shadow};
 
   nav {
     margin-top: 2rem;
@@ -31,7 +35,7 @@ export const Container = styled.aside`
   .divider {
     height: 1px;
     width: 100%;
-    background: #d3d3d3;
+    background: ${props => props.theme.colors.border};
     margin-top: 2.6rem;
   }
 

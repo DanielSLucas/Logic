@@ -12,7 +12,7 @@ interface ButtonProps {
 export const Container = styled.div<ContainerProps>`
   height: 2rem;
   width: 6rem;
-  background: #fff;
+  background: 0;
   border-radius: 0.5rem;
 
   display: flex;
@@ -28,40 +28,40 @@ export const Container = styled.div<ContainerProps>`
   ${props =>
     props.isHovered &&
     css`
-      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+      box-shadow: 2px 2px 2px ${props.theme.colors.shadow};
     `}
 `;
 
 export const OnButton = styled.button<ButtonProps>`
-  color: #d3d3d3;
+  color: ${props => props.theme.colors.switchOffText};
   width: 100%;
   height: 100%;
-  border: 1px solid #b1acac;
+  border: 1px solid ${props => props.theme.colors.switchBorder};
   border-radius: 0.5rem 0 0 0.5rem;
   transition: 0.5s background-color;
-  background: ${props => props.theme.colors.whiteBackground};
+  background: ${props => props.theme.colors.switchOffBackground};
 
   ${props =>
     props.isSelected &&
     css`
-      color: ${props.theme.colors.text};
-      background: #1ca0f2;
+      color: ${props.theme.colors.switchOnText};
+      background: ${props.theme.colors.switchOnBackground};
     `}
 `;
 
 export const OffButton = styled.button<ButtonProps>`
-  color: #d3d3d3;
+  color: ${props => props.theme.colors.switchOffText};
   width: 100%;
   height: 100%;
-  border: 1px solid #b1acac;
+  border: 1px solid ${props => props.theme.colors.switchBorder};
   border-radius: 0 0.5rem 0.5rem 0;
   transition: 0.5s background-color;
-  background: ${props => props.theme.colors.whiteBackground};
+  background: ${props => props.theme.colors.switchOffBackground};
 
   ${props =>
     props.isSelected &&
     css`
-      color: ${props.theme.colors.text};
-      background: #1ca0f2;
+      color: ${props.theme.colors.switchOnText};
+      background: ${props.theme.colors.switchOnBackground};
     `}
 `;

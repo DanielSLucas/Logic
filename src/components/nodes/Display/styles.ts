@@ -8,8 +8,8 @@ interface ContainerProps {
 export const Container = styled.div<ContainerProps>`
   height: 4rem;
   width: 3.5rem;
-  background: #fff;
-  border: 1px solid #000;
+  background: ${props => props.theme.colors.displayBackground};
+  border: 1px solid ${props => props.theme.colors.displayBorder};
   border-radius: 0.5rem;
 
   display: flex;
@@ -24,7 +24,7 @@ export const Container = styled.div<ContainerProps>`
     align-items: center;
     justify-content: center;
 
-    background: ${props => props.theme.colors.whiteBackground};
+    background: ${props => props.theme.colors.lighterBackground};
     border: 1px solid ${props => props.theme.colors.border};
     border-radius: 0.5rem;
 
@@ -40,6 +40,6 @@ export const Container = styled.div<ContainerProps>`
   ${props =>
     props.isHovered &&
     css`
-      box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+      box-shadow: 2px 2px 2px ${props.theme.colors.shadow};
     `}
 `;
