@@ -1,7 +1,4 @@
-/* eslint-disable react/require-default-props */
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-plusplus */
-/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useRef,
   useState,
@@ -16,7 +13,6 @@ import { ThemeContext } from 'styled-components';
 
 import ReactFlow, {
   Edge,
-  Node,
   Elements,
   isNode,
   removeElements,
@@ -71,6 +67,7 @@ const nodeTypes = {
 };
 
 let id = 0;
+// eslint-disable-next-line no-plusplus
 const getId = () => `dndnode_${id++}`;
 
 interface MainProps {
@@ -90,6 +87,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
   useEffect(() => {
     if (router.query.id) {
       initalFlowInstance.elements.forEach(element => {
+        // eslint-disable-next-line no-plusplus
         if (isNode(element)) id++;
       });
 
@@ -106,7 +104,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
   const handleNodeMouseEnter = useCallback(
     (
       event: React.MouseEvent<Element, MouseEvent>,
-      clikedElement: Node<any> | Edge<any>,
+      clikedElement: FlowElement,
     ) => {
       const newElements = elements.map(element => {
         if (isNode(element) && element.id === clikedElement.id) {
@@ -129,7 +127,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
   const handleNodeMouseLeave = useCallback(
     (
       event: React.MouseEvent<Element, MouseEvent>,
-      clikedElement: Node<any> | Edge<any>,
+      clikedElement: FlowElement,
     ) => {
       const newElements = elements.map(element => {
         if (isNode(element) && element.id === clikedElement.id) {
@@ -152,7 +150,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
   const handleElementClick = useCallback(
     (
       event: React.MouseEvent<Element, MouseEvent>,
-      clikedElement: Node<any> | Edge<any>,
+      clikedElement: FlowElement,
     ) => {
       let preNewElements = elements;
 
@@ -192,6 +190,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
   );
 
   const handlePaneClick = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (event: React.MouseEvent<Element, MouseEvent>) => {
       const newElements = updateElements(
         elements.map(element => {
@@ -277,6 +276,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
 
   const handleDragOver = useCallback((event: any) => {
     event.preventDefault();
+    // eslint-disable-next-line no-param-reassign
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
