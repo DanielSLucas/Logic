@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import { OnLoadParams, Elements } from 'react-flow-renderer';
 import { FiPlus, FiX } from 'react-icons/fi';
@@ -5,7 +6,8 @@ import { useElements } from '../../hooks/elements';
 
 import { Container, Tab, AddTab } from './styles';
 
-interface Tab {
+interface ITab {
+  id?: string;
   name: string;
   tabElements: Elements;
 }
@@ -15,8 +17,9 @@ interface TabsBarProps {
 }
 
 const TabsBar: React.FC<TabsBarProps> = ({ rfInstance }) => {
+  const router = useRouter();
   const { elements, setElements } = useElements();
-  const [tabs, setTabs] = useState<Tab[]>([
+  const [tabs, setTabs] = useState<ITab[]>([
     {
       name: 'Tab 1',
       tabElements: [],
@@ -40,13 +43,33 @@ const TabsBar: React.FC<TabsBarProps> = ({ rfInstance }) => {
     );
   }, [elements, selectedTab, rfInstance]);
 
+  useEffect(() => {
+    setTabs(state => {
+      const selectedTabIndex = state.findIndex(tab => tab.name === selectedTab);
+
+      const newTabs = state.map((tab, index) => {
+        if (selectedTabIndex === index) {
+          return { ...tab, id: router.query.id as string };
+        }
+        return tab;
+      });
+
+      return newTabs;
+    });
+  }, [router.query, selectedTab]);
+
   const handleTabClick = useCallback(
-    (tab: Tab) => {
+    (tab: ITab) => {
+      if (tab.id) {
+        router.replace(`${process.env.NEXT_PUBLIC_URL}/?id=${tab.id}`);
+      } else if (router.query.id && !tab.id) {
+        router.replace(`${process.env.NEXT_PUBLIC_URL}/`);
+      }
       setLastTab(selectedTab);
       setElements(tab.tabElements);
       setSelectedTab(tab.name);
     },
-    [setElements, selectedTab],
+    [setElements, selectedTab, router],
   );
 
   const handleCloseTab = useCallback(
