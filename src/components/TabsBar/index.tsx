@@ -80,9 +80,26 @@ const TabsBar: React.FC<TabsBarProps> = ({ rfInstance }) => {
           .map((tab, index) => ({ ...tab, name: `Tab ${index + 1}` })),
       );
 
-      setSelectedTab(lastTab);
+      const selectedTabIndex = tabs.findIndex(tab => tab.name === selectedTab);
+      if (selectedTabIndex > tabIndex) {
+        setSelectedTab(tabs[selectedTabIndex - 1].name);
+      }
+
+      if (tabs[tabIndex].name === selectedTab) {
+        const lastTabIndex = tabs.findIndex(tab => tab.name === lastTab);
+
+        if (tabs[lastTabIndex].id) {
+          router.replace(
+            `${process.env.NEXT_PUBLIC_URL}/?id=${tabs[lastTabIndex].id}`,
+          );
+        } else {
+          router.replace(`${process.env.NEXT_PUBLIC_URL}/`);
+        }
+
+        setSelectedTab(lastTab);
+      }
     },
-    [lastTab],
+    [lastTab, router, tabs, selectedTab],
   );
 
   const handleAddTab = useCallback(() => {
@@ -108,7 +125,7 @@ const TabsBar: React.FC<TabsBarProps> = ({ rfInstance }) => {
         },
       ]);
     }
-  }, [tabs]);
+  }, [tabs, router]);
 
   return (
     <Container>
