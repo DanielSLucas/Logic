@@ -7,6 +7,24 @@ export const Container = styled.div`
 
   margin: 0.5rem 0.25rem;
 
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    display: none;
+  }
+
+  &:hover span {
+    display: flex;
+    white-space: nowrap;
+    margin-right: 0.5rem;
+    /* position: absolute;
+    top: 21%;
+    left: -430%; */
+  }
+
   button {
     position: relative;
     background: ${props => props.theme.colors.lighterBackground};
@@ -20,13 +38,6 @@ export const Container = styled.div`
     &:active {
       transform: translateY(3px);
       box-shadow: none;
-    }
-
-    &:hover::before {
-      content: 'Save';
-      position: absolute;
-      bottom: -1.5rem;
-      right: 0;
     }
 
     svg {
