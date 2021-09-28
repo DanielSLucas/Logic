@@ -27,6 +27,7 @@ import ReactFlow, {
   FlowElement,
   FlowExportObject,
   useZoomPanHelper,
+  OnLoadParams,
 } from 'react-flow-renderer';
 
 import { GetServerSideProps } from 'next';
@@ -50,7 +51,7 @@ import {
   ReactFlowContainer,
   ScreenSizeWarning,
 } from '../styles/Main';
-import SaveButton from '../components/SaveButton';
+import SaveButton from '../components/ShareButton';
 import { useElements } from '../hooks/elements';
 import SideBar from '../components/SideBar';
 import { client } from '../lib/prismic';
@@ -82,7 +83,8 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
   const theme = useContext(ThemeContext);
   const { elements, setElements } = useElements();
   const reactFlowWrapper = useRef<HTMLDivElement>({} as HTMLDivElement);
-  const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
+  const [reactFlowInstance, setReactFlowInstance] =
+    useState<OnLoadParams>(null);
   const { transform } = useZoomPanHelper();
 
   useEffect(() => {
@@ -97,7 +99,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
     }
   }, [initalFlowInstance, router, transform, setElements]);
 
-  const handleLoad = useCallback(_reactFlowInstance => {
+  const handleLoad = useCallback((_reactFlowInstance: OnLoadParams) => {
     return setReactFlowInstance(_reactFlowInstance);
   }, []);
 
@@ -348,7 +350,7 @@ const Main: React.FC<MainProps> = ({ initalFlowInstance, lessons }) => {
             <div style={{ width: '100%', position: 'relative' }}>
               <LogicGatesBar />
               <SaveButton rfInstance={reactFlowInstance} />
-              <TabsBar />
+              <TabsBar rfInstance={reactFlowInstance} />
             </div>
 
             <ReactFlow

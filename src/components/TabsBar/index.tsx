@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Elements } from 'react-flow-renderer';
+import { OnLoadParams, Elements } from 'react-flow-renderer';
 import { FiPlus, FiX } from 'react-icons/fi';
 import { useElements } from '../../hooks/elements';
 
@@ -10,22 +10,41 @@ interface Tab {
   tabElements: Elements;
 }
 
-const TabsBar: React.FC = () => {
+interface TabsBarProps {
+  rfInstance: OnLoadParams;
+}
+
+const TabsBar: React.FC<TabsBarProps> = ({ rfInstance }) => {
   const { elements, setElements } = useElements();
-  const [tabs, setTabs] = useState<Tab[]>([]);
-  const [selectedTab, setSelectedTab] = useState<Tab>({} as Tab);
-  const [lastTab, setLastTab] = useState<Tab>({} as Tab);
+  const [tabs, setTabs] = useState<Tab[]>([
+    {
+      name: 'Tab 1',
+      tabElements: [],
+    },
+  ]);
+  const [selectedTab, setSelectedTab] = useState('Tab 1');
+  const [lastTab, setLastTab] = useState('');
 
   useEffect(() => {
-    setTabs([{ name: 'Tab 1', tabElements: elements }]);
-    setSelectedTab({ name: 'Tab 1', tabElements: elements });
-  }, []);
+    setTabs(state =>
+      state.map(tab => {
+        if (tab.name === selectedTab) {
+          return {
+            ...tab,
+            tabElements: rfInstance?.toObject().elements,
+          };
+        }
+
+        return tab;
+      }),
+    );
+  }, [elements, selectedTab, rfInstance]);
 
   const handleTabClick = useCallback(
     (tab: Tab) => {
       setLastTab(selectedTab);
       setElements(tab.tabElements);
-      setSelectedTab(tab);
+      setSelectedTab(tab.name);
     },
     [setElements, selectedTab],
   );
@@ -46,35 +65,32 @@ const TabsBar: React.FC = () => {
   const handleAddTab = useCallback(() => {
     setTabs(state => [
       ...state,
-      { name: `Tab ${tabs.length + 1}`, tabElements: [], isSelected: false },
+      {
+        name: `Tab ${tabs.length + 1}`,
+        tabElements: [],
+      },
     ]);
   }, [tabs]);
 
   useEffect(() => {
     if (tabs.length === 1) {
-      setSelectedTab(tabs[0]);
+      setSelectedTab(tabs[0].name);
+    }
+    if (tabs.length === 0) {
+      setSelectedTab('');
+      setTabs([
+        {
+          name: 'Tab 1',
+          tabElements: [],
+        },
+      ]);
     }
   }, [tabs]);
-
-  useEffect(() => {
-    setTabs(state =>
-      state.map(tab => {
-        if (tab.name === selectedTab.name) {
-          return {
-            ...tab,
-            tabElements: elements,
-          };
-        }
-
-        return tab;
-      }),
-    );
-  }, [elements, selectedTab]);
 
   return (
     <Container>
       {tabs.map((tab, index) => (
-        <Tab key={tab.name} isSelected={selectedTab.name === tab.name}>
+        <Tab key={tab.name} isSelected={selectedTab === tab.name}>
           <button type="button" onClick={() => handleTabClick(tab)}>
             {tab.name}
           </button>
