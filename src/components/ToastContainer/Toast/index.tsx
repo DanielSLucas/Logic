@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 import { IToast, useToast } from '../../../hooks/toasts';
 
-import { Container, Content } from './styles';
+import { Container, Content, ImageContainer } from './styles';
 
 interface ToastProps {
   toast: IToast;
@@ -42,11 +42,15 @@ const Toast: React.FC<ToastProps> = ({ toast, style }) => {
           }}
         />
 
-        <Image
-          src={toast.content.data.main_image.url}
-          width={toast.content.data.main_image.dimensions.width}
-          height={toast.content.data.main_image.dimensions.height}
-        />
+        <ImageContainer>
+          <div>
+            <Image
+              src={toast.content.data.main_image.url}
+              width={toast.content.data.main_image.dimensions.width}
+              height={toast.content.data.main_image.dimensions.height}
+            />
+          </div>
+        </ImageContainer>
 
         <div
           dangerouslySetInnerHTML={{
