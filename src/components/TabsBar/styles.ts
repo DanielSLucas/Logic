@@ -39,6 +39,13 @@ export const Tab = styled.div<TabProps>`
     color: ${props => props.theme.colors.switchOffText};
   }
 
+  button input {
+    width: 8rem;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid ${props => props.theme.colors.secondary};
+  }
+
   ${props =>
     props.isSelected &&
     css`
