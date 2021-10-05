@@ -15,7 +15,7 @@ export const Container = styled.div<ContainerProps>`
 
   svg {
     position: relative;
-    width: 7rem;
+    width: 5.5rem;
     height: 100%;
     stroke: ${props => props.theme.colors.nodeStroke};
     fill: ${props => props.theme.colors.background};
@@ -40,14 +40,14 @@ export const Container = styled.div<ContainerProps>`
 
         &.inputA {
           position: absolute;
-          bottom: 2.7rem;
-          left: 0.5rem;
+          top: 2.3rem;
+          left: -0.6rem;
         }
 
         &.output {
           position: absolute;
-          top: 2.6rem;
-          right: 1.8rem;
+          top: 2.3rem;
+          right: 1.6rem;
         }
       }
     `}
