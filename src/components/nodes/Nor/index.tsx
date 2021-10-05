@@ -13,7 +13,6 @@ interface NorProps {
       targetHandle: string;
       value: string;
     }[];
-    setElements: any;
   };
 }
 

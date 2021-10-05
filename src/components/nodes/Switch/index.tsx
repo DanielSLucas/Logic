@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useState } from 'react';
 import { Handle, Position, Node } from 'react-flow-renderer';
 import { useElements } from '../../../hooks/elements';

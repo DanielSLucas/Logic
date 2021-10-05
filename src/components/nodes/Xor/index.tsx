@@ -13,7 +13,6 @@ interface XorProps {
       targetHandle: string;
       value: string;
     }[];
-    setElements: any;
   };
 }
 

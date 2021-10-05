@@ -13,7 +13,6 @@ interface OrProps {
       targetHandle: string;
       value: string;
     }[];
-    setElements: any;
   };
 }
 

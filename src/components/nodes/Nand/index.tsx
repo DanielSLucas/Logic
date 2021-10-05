@@ -13,7 +13,6 @@ interface NandProps {
       targetHandle: string;
       value: string;
     }[];
-    setElements: any;
   };
 }
 

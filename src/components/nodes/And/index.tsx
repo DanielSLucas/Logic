@@ -13,7 +13,6 @@ interface AndProps {
       targetHandle: string;
       value: string;
     }[];
-    setElements: any;
   };
 }
 

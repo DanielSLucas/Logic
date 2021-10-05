@@ -8,7 +8,6 @@ interface AndProps {
     isHovered: boolean;
     nodeId: string;
     inputValue: number;
-    setElements: any;
     inputs: {
       value: string;
     }[];

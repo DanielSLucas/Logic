@@ -13,7 +13,6 @@ interface XnorProps {
       targetHandle: string;
       value: string;
     }[];
-    setElements: any;
   };
 }
 
