@@ -1,5 +1,4 @@
 /* eslint-disable react/no-danger */
-import { useCallback } from 'react';
 import { FiX } from 'react-icons/fi';
 import PrismicDOM from 'prismic-dom';
 import Image from 'next/image';
@@ -16,15 +15,11 @@ interface ToastProps {
 const Toast: React.FC<ToastProps> = ({ toast, style }) => {
   const { removeToast } = useToast();
 
-  const handleClick = useCallback(() => {
-    removeToast(toast.id);
-  }, [toast.id, removeToast]);
-
   return (
     <Container style={style}>
       <header>
         <h2>{toast.title}</h2>
-        <button type="button" onClick={handleClick}>
+        <button type="button" onClick={removeToast}>
           <FiX />
         </button>
       </header>

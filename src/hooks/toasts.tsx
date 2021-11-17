@@ -5,7 +5,7 @@ import ToastContainer from '../components/ToastContainer';
 
 interface ToastContexData {
   addToast(toastData: Omit<IToast, 'id'>): IToast;
-  removeToast(id: string): void;
+  removeToast(): void;
   isShowingAnToast: boolean;
 }
 
@@ -29,15 +29,15 @@ const ToastProvider: React.FC = ({ children }) => {
         content,
       };
 
-      setToasts(state => [...state, toast]);
+      setToasts([toast]);
       setIsShowingAnToast(true);
       return toast;
     },
     [],
   );
 
-  const removeToast = useCallback((id: string) => {
-    setToasts(state => state.filter(toast => toast.id !== id));
+  const removeToast = useCallback(() => {
+    setToasts([]);
     setIsShowingAnToast(false);
   }, []);
 

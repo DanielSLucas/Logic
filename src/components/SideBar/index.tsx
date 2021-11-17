@@ -14,27 +14,24 @@ interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = ({ lessons }) => {
   const { addToast, removeToast, isShowingAnToast } = useToast();
-  const [idOfCurrentlyVisibleToast, setIdOfCurrentlyVisibleToast] =
-    useState('');
   const [currentlySelectedLesson, setCurrentlySelectedLesson] = useState('');
 
   const handleLessonClick = useCallback(
     (title: string, content: Document, lesson: string) => {
-      if (isShowingAnToast) removeToast(idOfCurrentlyVisibleToast);
+      if (isShowingAnToast) removeToast();
 
       setTimeout(
         () => {
-          const toast = addToast({
+          addToast({
             title,
             content,
           });
-          setIdOfCurrentlyVisibleToast(toast.id);
           setCurrentlySelectedLesson(lesson);
         },
         isShowingAnToast ? 700 : 0,
       );
     },
-    [addToast, idOfCurrentlyVisibleToast, isShowingAnToast, removeToast],
+    [addToast, isShowingAnToast, removeToast],
   );
 
   useEffect(() => {
