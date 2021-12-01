@@ -5,9 +5,7 @@ type ICircuit = Document & {
   reactFlowInstance: FlowExportObject;
 };
 
-mongoose.connect(
-  'mongodb+srv://admin:admin@cluster0.ztsbr.mongodb.net/logicdb?retryWrites=true&w=majority',
-);
+mongoose.connect(process.env.MONGODB_URI);
 
 const circuitsSchema = new Schema({
   reactFlowInstance: Object,
