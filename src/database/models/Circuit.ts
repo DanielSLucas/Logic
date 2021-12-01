@@ -5,6 +5,8 @@ type ICircuit = Document & {
   reactFlowInstance: FlowExportObject;
 };
 
+mongoose.connect(process.env.MONGODB_URI);
+
 const circuitsSchema = new Schema({
   reactFlowInstance: Object,
 });
